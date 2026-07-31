@@ -1,0 +1,47 @@
+---
+import {
+	content,
+	getPath,
+	type Locale,
+} from "../lib/content";
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+const shared = content[locale].shared;
+const footer = shared.footer;
+const home = content[locale].pages.home;
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+	<div class="shell footer-inner">
+		<div class="footer-brand">
+			<span class="footer-brand__name">Tofleven</span>
+			<p>{home.hero.title}</p>
+		</div>
+
+		<nav class="footer-column" aria-labelledby={`footer-about-${locale}`}>
+			<h2 id={`footer-about-${locale}`}>{footer.col1Title}</h2>
+			<ul>
+				<li><a href={getPath(locale, "about")}>{footer.col1Items[0]}</a></li>
+				<li><a href={getPath(locale, "accountability")}>{footer.col1Items[1]}</a></li>
+			</ul>
+		</nav>
+
+		<div class="footer-column" aria-labelledby={`footer-contact-${locale}`}>
+			<h2 id={`footer-contact-${locale}`}>{footer.col2Title}</h2>
+			<ul>
+				<li><a href={`mailto:${footer.col2Items[0]}`}>{footer.col2Items[0]}</a></li>
+				<li>{footer.col2Items[1]}</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="shell footer-bottom">
+		<span>© {currentYear} Tofleven</span>
+		<a href={getPath(locale, "privacy")}>{footer.privacyLink}</a>
+	</div>
+</footer>

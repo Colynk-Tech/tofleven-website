@@ -1,0 +1,408 @@
+---
+import { actions, isInputError } from "astro:actions";
+import { getPath, type ContactPageContent, type Locale } from "../lib/content";
+
+interface Props {
+	locale: Locale;
+	content: ContactPageContent["form"];
+}
+
+const { locale, content: formContent } = Astro.props;
+const result = Astro.getActionResult(actions.contact);
+const serverSuccess = Boolean(result?.data?.ok);
+const serverPreview = Boolean(result?.data?.preview);
+const serverError = result?.error;
+const serverInputErrors = isInputError(serverError) ? serverError.fields : undefined;
+type ContactFieldName = keyof NonNullable<typeof serverInputErrors>;
+const hasFieldError = (field: ContactFieldName) =>
+	Boolean(serverInputErrors?.[field]?.length);
+
+const strings = locale === "nl"
+	? {
+			selectPrompt: "Kies een onderwerp",
+			requiredLabel: "Verplicht veld",
+			errorSummary: "Controleer de gemarkeerde velden.",
+			rateLimit: "Er zijn te veel pogingen gedaan. Probeer het later opnieuw.",
+			previewSuccess:
+				"Dank voor je bericht. De formulierstroom werkt; in deze preview is geen e-mail verstuurd.",
+			messageHelp:
+				"Deel alleen wat nodig is om contact op te nemen. Stuur geen medische dossiers of zeer gevoelige informatie.",
+			emergencyNote:
+				"Dit formulier is niet geschikt voor spoed of crisissituaties.",
+			privacyPrefix: "Ik heb de",
+		}
+	: {
+			selectPrompt: "Choose a subject",
+			requiredLabel: "Required field",
+			errorSummary: "Please check the highlighted fields.",
+			rateLimit: "There have been too many attempts. Please try again later.",
+			previewSuccess:
+				"Thank you. The form flow works; no email was sent from this preview.",
+			messageHelp:
+				"Only share what is needed for a reply. Do not send medical records or highly sensitive information.",
+			emergencyNote:
+				"This form is not suitable for emergencies or crisis situations.",
+			privacyPrefix: "I have read the",
+		};
+
+const subjects = [
+	{ value: "individual", label: formContent.subjectOptions[0] },
+	{ value: "relationship", label: formContent.subjectOptions[1] },
+	{ value: "child-parent", label: formContent.subjectOptions[2] },
+	{ value: "hold-me-tight", label: formContent.subjectOptions[3] },
+] as const;
+
+const initialStatusState = serverSuccess
+	? "success"
+	: serverError
+		? "error"
+		: undefined;
+const initialStatusMessage = serverSuccess
+	? serverPreview
+		? strings.previewSuccess
+		: formContent.states.success
+	: serverError?.code === "TOO_MANY_REQUESTS"
+		? strings.rateLimit
+		: serverError
+			? isInputError(serverError)
+				? strings.errorSummary
+				: formContent.states.error
+			: "";
+---
+
+<div class="form-card" data-form-wrapper>
+	<div
+		class="form-status"
+		data-form-status
+		data-state={initialStatusState}
+		role={serverError ? "alert" : "status"}
+		aria-live="polite"
+		tabindex="-1"
+	>
+		{initialStatusMessage}
+	</div>
+
+	{!serverSuccess && (
+		<form
+			class="contact-form"
+			method="POST"
+			action={actions.contact}
+			data-contact-form
+			data-pending-message={formContent.states.submitting}
+			data-success-message={formContent.states.success}
+			data-preview-success-message={strings.previewSuccess}
+			data-error-message={formContent.states.error}
+			data-error-summary={strings.errorSummary}
+			data-rate-limit-message={strings.rateLimit}
+			data-required-message={formContent.validation.required}
+			data-email-message={formContent.validation.invalidEmail}
+			data-consent-message={formContent.validation.consentRequired}
+			aria-busy="false"
+		>
+			<input type="hidden" name="locale" value={locale} />
+
+			<div class="field-honeypot" aria-hidden="true">
+				<label for={`website-${locale}`}>Website</label>
+				<input
+					id={`website-${locale}`}
+					name="website"
+					type="text"
+					tabindex="-1"
+					autocomplete="off"
+				/>
+			</div>
+
+			<div class="form-field">
+				<label for={`name-${locale}`}>
+					{formContent.fields.name}
+					<span class="required-mark" aria-hidden="true">*</span>
+					<span class="field-honeypot">({strings.requiredLabel})</span>
+				</label>
+				<input
+					class="form-control"
+					id={`name-${locale}`}
+					name="name"
+					type="text"
+					autocomplete="name"
+					required
+					minlength="2"
+					maxlength="100"
+					aria-invalid={hasFieldError("name") ? "true" : "false"}
+					aria-describedby={`name-error-${locale}`}
+				/>
+				<p
+					class="field-error"
+					id={`name-error-${locale}`}
+					data-error-for="name"
+					data-visible={hasFieldError("name") ? "true" : "false"}
+				>
+					{formContent.validation.required}
+				</p>
+			</div>
+
+			<div class="form-field">
+				<label for={`email-${locale}`}>
+					{formContent.fields.email}
+					<span class="required-mark" aria-hidden="true">*</span>
+					<span class="field-honeypot">({strings.requiredLabel})</span>
+				</label>
+				<input
+					class="form-control"
+					id={`email-${locale}`}
+					name="email"
+					type="email"
+					autocomplete="email"
+					required
+					maxlength="254"
+					aria-invalid={hasFieldError("email") ? "true" : "false"}
+					aria-describedby={`email-error-${locale}`}
+				/>
+				<p
+					class="field-error"
+					id={`email-error-${locale}`}
+					data-error-for="email"
+					data-visible={hasFieldError("email") ? "true" : "false"}
+				>
+					{formContent.validation.invalidEmail}
+				</p>
+			</div>
+
+			<div class="form-field">
+				<label for={`subject-${locale}`}>
+					{formContent.fields.subject}
+					<span class="required-mark" aria-hidden="true">*</span>
+					<span class="field-honeypot">({strings.requiredLabel})</span>
+				</label>
+				<select
+					class="form-control"
+					id={`subject-${locale}`}
+					name="subject"
+					required
+					aria-invalid={hasFieldError("subject") ? "true" : "false"}
+					aria-describedby={`subject-error-${locale}`}
+				>
+					<option value="" disabled selected>{strings.selectPrompt}</option>
+					{subjects.map((subject) => (
+						<option value={subject.value}>{subject.label}</option>
+					))}
+				</select>
+				<p
+					class="field-error"
+					id={`subject-error-${locale}`}
+					data-error-for="subject"
+					data-visible={hasFieldError("subject") ? "true" : "false"}
+				>
+					{formContent.validation.required}
+				</p>
+			</div>
+
+			<div class="form-field">
+				<label for={`message-${locale}`}>
+					{formContent.fields.message}
+					<span class="required-mark" aria-hidden="true">*</span>
+					<span class="field-honeypot">({strings.requiredLabel})</span>
+				</label>
+				<textarea
+					class="form-control"
+					id={`message-${locale}`}
+					name="message"
+					rows="5"
+					required
+					minlength="10"
+					maxlength="5000"
+					placeholder={formContent.fields.messagePlaceholder}
+					aria-invalid={hasFieldError("message") ? "true" : "false"}
+					aria-describedby={`message-help-${locale} message-error-${locale}`}
+				></textarea>
+				<p class="field-help" id={`message-help-${locale}`}>
+					{strings.messageHelp}
+					<strong>{strings.emergencyNote}</strong>
+				</p>
+				<p
+					class="field-error"
+					id={`message-error-${locale}`}
+					data-error-for="message"
+					data-visible={hasFieldError("message") ? "true" : "false"}
+				>
+					{formContent.validation.required}
+				</p>
+			</div>
+
+			<div class="form-field">
+				<div class="consent-field">
+					<input
+						id={`consent-${locale}`}
+						name="consent"
+						type="checkbox"
+						required
+						aria-invalid={hasFieldError("consent") ? "true" : "false"}
+						aria-describedby={`consent-error-${locale}`}
+					/>
+					<label for={`consent-${locale}`}>
+						{strings.privacyPrefix}{" "}
+						<a href={getPath(locale, "privacy")}>{formContent.consentLabel.replace(/^Ik ga akkoord met de |^I agree to the /, "")}</a>
+						{locale === "nl" ? " gelezen." : "."}
+					</label>
+				</div>
+				<p
+					class="field-error"
+					id={`consent-error-${locale}`}
+					data-error-for="consent"
+					data-visible={hasFieldError("consent") ? "true" : "false"}
+				>
+					{formContent.validation.consentRequired}
+				</p>
+			</div>
+
+			<div class="form-submit-row">
+				<button class="button button--primary" type="submit" data-submit-button>
+					<span data-submit-label>{formContent.submit}</span>
+				</button>
+			</div>
+		</form>
+	)}
+</div>
+
+<script>
+	import { actions, isInputError } from "astro:actions";
+
+	const forms = document.querySelectorAll<HTMLFormElement>("[data-contact-form]");
+
+	for (const form of forms) {
+		if (form.dataset.enhanced === "true") continue;
+		form.dataset.enhanced = "true";
+		form.noValidate = true;
+
+		const wrapper = form.closest<HTMLElement>("[data-form-wrapper]");
+		const status = wrapper?.querySelector<HTMLElement>("[data-form-status]");
+		const submit = form.querySelector<HTMLButtonElement>("[data-submit-button]");
+		const submitLabel = form.querySelector<HTMLElement>("[data-submit-label]");
+		const consent = form.elements.namedItem("consent") as HTMLInputElement | null;
+		const idleLabel = submitLabel?.textContent ?? "";
+
+		const clearErrors = () => {
+			for (const control of form.querySelectorAll<HTMLElement>("[aria-invalid]")) {
+				control.setAttribute("aria-invalid", "false");
+			}
+			for (const error of form.querySelectorAll<HTMLElement>("[data-error-for]")) {
+				error.dataset.visible = "false";
+			}
+			if (status) {
+				status.removeAttribute("data-state");
+				status.textContent = "";
+				status.setAttribute("role", "status");
+			}
+		};
+
+		const showFieldError = (name: string, message: string) => {
+			const control = form.elements.namedItem(name);
+			if (control instanceof HTMLElement) {
+				control.setAttribute("aria-invalid", "true");
+			}
+			const error = form.querySelector<HTMLElement>(`[data-error-for="${name}"]`);
+			if (error) {
+				error.textContent = message;
+				error.dataset.visible = "true";
+			}
+		};
+
+		const showStatus = (
+			state: "pending" | "success" | "error",
+			message: string,
+		) => {
+			if (!status) return;
+			status.dataset.state = state;
+			status.textContent = message;
+			status.setAttribute("role", state === "error" ? "alert" : "status");
+		};
+
+		const syncSubmitState = () => {
+			if (submit && !form.getAttribute("aria-busy")?.includes("true")) {
+				submit.disabled = !consent?.checked;
+			}
+		};
+
+		consent?.addEventListener("change", syncSubmitState);
+		syncSubmitState();
+
+		form.addEventListener("submit", async (event) => {
+			event.preventDefault();
+			clearErrors();
+
+			const controls = Array.from(
+				form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
+					"input:not([name=website]):not([type=hidden]), select, textarea",
+				),
+			);
+			let firstInvalid: HTMLElement | undefined;
+
+			for (const control of controls) {
+				if (control.validity.valid) continue;
+				firstInvalid ??= control;
+				const message =
+					control.name === "email" && control.validity.typeMismatch
+						? form.dataset.emailMessage ?? ""
+						: control.name === "consent"
+							? form.dataset.consentMessage ?? ""
+							: form.dataset.requiredMessage ?? "";
+				showFieldError(control.name, message);
+			}
+
+			if (firstInvalid) {
+				showStatus("error", form.dataset.errorSummary ?? "");
+				firstInvalid.focus();
+				return;
+			}
+
+			form.setAttribute("aria-busy", "true");
+			if (submit) submit.disabled = true;
+			if (submitLabel) {
+				submitLabel.textContent = form.dataset.pendingMessage ?? idleLabel;
+			}
+			showStatus("pending", form.dataset.pendingMessage ?? "");
+
+			try {
+				const actionResult = await actions.contact(new FormData(form));
+
+				if (actionResult.error) {
+					if (isInputError(actionResult.error)) {
+						for (const field of Object.keys(actionResult.error.fields)) {
+							const message =
+								field === "email"
+									? form.dataset.emailMessage ?? ""
+									: field === "consent"
+										? form.dataset.consentMessage ?? ""
+										: form.dataset.requiredMessage ?? "";
+							showFieldError(field, message);
+						}
+						showStatus("error", form.dataset.errorSummary ?? "");
+					} else {
+						const message =
+							actionResult.error.code === "TOO_MANY_REQUESTS"
+								? form.dataset.rateLimitMessage ?? ""
+								: form.dataset.errorMessage ?? "";
+						showStatus("error", message);
+					}
+					status?.focus();
+					return;
+				}
+
+				form.hidden = true;
+				showStatus(
+					"success",
+					actionResult.data.preview
+						? form.dataset.previewSuccessMessage ?? ""
+						: form.dataset.successMessage ?? "",
+				);
+				status?.focus();
+			} catch {
+				showStatus("error", form.dataset.errorMessage ?? "");
+				status?.focus();
+			} finally {
+				form.setAttribute("aria-busy", "false");
+				if (submitLabel) submitLabel.textContent = idleLabel;
+				syncSubmitState();
+			}
+		});
+	}
+</script>

@@ -1,0 +1,193 @@
+---
+import ButtonLink from "./ButtonLink.astro";
+import ContactForm from "./ContactForm.astro";
+import InfoCard from "./InfoCard.astro";
+import SectionHeading from "./SectionHeading.astro";
+import {
+	getPageContent,
+	getPath,
+	type Locale,
+	type PageKey,
+} from "../lib/content";
+
+interface Props {
+	locale: Locale;
+	page: PageKey;
+}
+
+const { locale, page } = Astro.props;
+const home = page === "home" ? getPageContent(locale, "home") : undefined;
+const about = page === "about" ? getPageContent(locale, "about") : undefined;
+const accountability =
+	page === "accountability"
+		? getPageContent(locale, "accountability")
+		: undefined;
+const contact =
+	page === "contact" ? getPageContent(locale, "contact") : undefined;
+const privacy =
+	page === "privacy" ? getPageContent(locale, "privacy") : undefined;
+---
+
+{home && (
+	<>
+		<section class="shell hero" aria-labelledby="home-title">
+			<span class="badge badge--sand">{home.hero.eyebrow}</span>
+			<h1 id="home-title">{home.hero.title}</h1>
+			<p class="hero__lede">{home.hero.intro}</p>
+			<div class="hero__actions">
+				<ButtonLink href={getPath(locale, "contact")} size="large">
+					{home.hero.ctaPrimary}
+				</ButtonLink>
+				<ButtonLink
+					href={getPath(locale, "accountability")}
+					variant="ghost"
+					size="large"
+				>
+					{home.hero.ctaSecondary}
+				</ButtonLink>
+			</div>
+		</section>
+
+		<section class="section section--soft" aria-labelledby="method-title">
+			<div class="shell">
+				<SectionHeading
+					eyebrow={home.method.eyebrow}
+					title={home.method.title}
+					lede={home.method.lede}
+					align="center"
+					headingId="method-title"
+				/>
+				<div class="card-grid card-grid--three">
+					{home.method.cards.map((card) => <InfoCard card={card} />)}
+				</div>
+			</div>
+		</section>
+
+		<section class="section" aria-labelledby="guidance-title">
+			<div class="shell">
+				<SectionHeading
+					eyebrow={home.forWhom.eyebrow}
+					title={home.forWhom.title}
+					lede={home.forWhom.lede}
+					align="center"
+					headingId="guidance-title"
+				/>
+				<div class="card-grid card-grid--two">
+					{home.forWhom.trainings.map((training) => (
+						<InfoCard card={training} />
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="section--warm" aria-labelledby="vision-band-title">
+			<div class="shell closing-band">
+				<h2 id="vision-band-title">{home.band.title}</h2>
+				<p>{home.band.body}</p>
+				<ButtonLink href={getPath(locale, "accountability")} variant="secondary">
+					{home.band.cta}
+				</ButtonLink>
+			</div>
+		</section>
+	</>
+)}
+
+{about && (
+	<section class="shell split-page" aria-labelledby="about-title">
+		<div class="split-page__media">
+			<div
+				class="portrait-placeholder"
+				role="img"
+				aria-label={about.photoCaption}
+			></div>
+			<p class="placeholder-caption">{about.photoCaption}</p>
+		</div>
+
+		<div class="profile-copy">
+			<span class="badge badge--sage">{about.eyebrow}</span>
+			<h1 id="about-title">{about.name}</h1>
+			<p class="profile-copy__lead">{about.paragraphs[0]}</p>
+			<p>{about.paragraphs[1]}</p>
+			<p>{about.paragraphs[2]}</p>
+			<ul class="credentials">
+				{about.credentials.map((credential) => <li>{credential}</li>)}
+			</ul>
+			<div class="page-actions">
+				<ButtonLink href={getPath(locale, "contact")}>
+					{about.ctaPrimary}
+				</ButtonLink>
+				<ButtonLink href={getPath(locale, "accountability")} variant="ghost">
+					{about.ctaSecondary}
+				</ButtonLink>
+			</div>
+		</div>
+	</section>
+)}
+
+{accountability && (
+	<section class="content-shell approach-page" aria-labelledby="approach-title">
+		<span class="badge badge--teal">{accountability.eyebrow}</span>
+		<h1 id="approach-title">{accountability.title}</h1>
+		<p class="approach-page__lead">{accountability.intro[0]}</p>
+		<p>{accountability.intro[1]}</p>
+
+		<div class="card-grid card-grid--three">
+			{accountability.pillars.map((pillar) => <InfoCard card={pillar} />)}
+		</div>
+
+		<aside class="callout" aria-labelledby="reassurance-title">
+			<h2 id="reassurance-title">{accountability.reassurance.title}</h2>
+			<p>{accountability.reassurance.body}</p>
+		</aside>
+
+		<div class="page-actions">
+			<ButtonLink href={getPath(locale, "contact")} size="large">
+				{accountability.cta}
+			</ButtonLink>
+		</div>
+	</section>
+)}
+
+{contact && (
+	<section class="shell contact-page" aria-labelledby="contact-title">
+		<div class="contact-intro">
+			<SectionHeading
+				eyebrow={contact.eyebrow}
+				title={contact.title}
+				lede={contact.lede}
+				headingLevel={1}
+				headingId="contact-title"
+			/>
+			<div>
+				<dl class="contact-details">
+					<div>
+						<dt>{contact.emailLabel}</dt>
+						<dd><a href={`mailto:${contact.emailValue}`}>{contact.emailValue}</a></dd>
+					</div>
+					<div>
+						<dt>{contact.locationLabel}</dt>
+						<dd>{contact.locationValue}</dd>
+					</div>
+				</dl>
+				<p class="placeholder-caption">{contact.placeholderNote}</p>
+			</div>
+		</div>
+
+		<ContactForm locale={locale} content={contact.form} />
+	</section>
+)}
+
+{privacy && (
+	<article class="reading-shell privacy-page" aria-labelledby="privacy-title">
+		<header>
+			<h1 id="privacy-title">{privacy.title}</h1>
+			<p class="draft-note">{privacy.placeholderNote}</p>
+		</header>
+		{privacy.sections.map((section) => (
+			<section class="privacy-section">
+				<h2>{section.title}</h2>
+				<p>{section.body}</p>
+			</section>
+		))}
+	</article>
+)}
