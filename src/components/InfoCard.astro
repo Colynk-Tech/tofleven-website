@@ -1,0 +1,15 @@
+---
+import type { InfoCardContent } from "../lib/content";
+
+interface Props {
+	card: InfoCardContent;
+}
+
+const { card } = Astro.props;
+---
+
+<article class="content-card">
+	<p class="card__eyebrow">{card.eyebrow}</p>
+	<h3>{card.title}</h3>
+	<p>{card.body}</p>
+</article>

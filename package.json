@@ -1,0 +1,28 @@
+{
+  "name": "outputs-tofleven-astro",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "build:sites": "CONTACT_FORM_MODE=preview TOFLEVEN_TARGET=sites astro build && cp dist/server/entry.mjs dist/server/index.js",
+    "preview": "astro preview",
+    "start": "node ./dist/server/entry.mjs",
+    "check": "astro check",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/node": "^11.0.3",
+    "astro": "^7.1.6"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/cloudflare": "^14.1.7",
+    "@types/node": "^26.1.2",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.116.0"
+  }
+}

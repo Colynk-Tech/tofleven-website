@@ -1,0 +1,92 @@
+---
+import ButtonLink from "./ButtonLink.astro";
+import {
+	content,
+	getPath,
+	type Locale,
+	type PageKey,
+} from "../lib/content";
+
+interface Props {
+	locale: Locale;
+	page: PageKey;
+}
+
+const { locale, page } = Astro.props;
+const shared = content[locale].shared;
+const nlPath = getPath("nl", page);
+const enPath = getPath("en", page);
+---
+
+<header class="site-header">
+	<div class="shell header-inner">
+		<a class="brand" href={getPath(locale, "home")} aria-label="Tofleven home">
+			Tofleven
+		</a>
+
+		<nav class="primary-navigation" aria-label={locale === "nl" ? "Hoofdnavigatie" : "Main navigation"}>
+			<ul class="nav-links">
+				{shared.nav.items.map((item) => (
+					<li>
+						<a
+							class="nav-link"
+							href={getPath(locale, item.page)}
+							aria-current={page === item.page ? "page" : undefined}
+						>
+							{item.label}
+						</a>
+					</li>
+				))}
+			</ul>
+		</nav>
+
+		<div class="header-actions">
+			<nav class="language-switch" aria-label={shared.languageLabel}>
+				<a
+					class="language-switch__link"
+					href={nlPath}
+					lang="nl"
+					hreflang="nl"
+					aria-current={locale === "nl" ? "true" : undefined}
+					aria-label="Nederlands"
+				>
+					NL
+				</a>
+				<a
+					class="language-switch__link"
+					href={enPath}
+					lang="en"
+					hreflang="en"
+					aria-current={locale === "en" ? "true" : undefined}
+					aria-label="English"
+				>
+					EN
+				</a>
+			</nav>
+			<ButtonLink href={getPath(locale, "contact")}>{shared.nav.ctaLabel}</ButtonLink>
+		</div>
+
+		<details class="mobile-navigation">
+			<summary>
+				<span class="mobile-navigation__open">{locale === "nl" ? "Menu" : "Menu"}</span>
+				<span class="mobile-navigation__close">{locale === "nl" ? "Sluit" : "Close"}</span>
+			</summary>
+			<nav class="mobile-menu" aria-label={locale === "nl" ? "Mobiele navigatie" : "Mobile navigation"}>
+				<ul>
+					{shared.nav.items.map((item) => (
+						<li>
+							<a
+								class="nav-link"
+								href={getPath(locale, item.page)}
+								aria-current={page === item.page ? "page" : undefined}
+							>
+								{item.label}
+							</a>
+						</li>
+					))}
+				</ul>
+				<ButtonLink href={getPath(locale, "contact")}>{shared.nav.ctaLabel}</ButtonLink>
+			</nav>
+		</details>
+	</div>
+</header>

@@ -1,0 +1,18 @@
+---
+import ButtonLink from "../components/ButtonLink.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+	locale="nl"
+	page="home"
+	titleOverride="Pagina niet gevonden | Tofleven"
+	descriptionOverride="De gevraagde pagina kon niet worden gevonden."
+	noindex
+>
+	<section class="shell not-found">
+		<h1>Deze pagina is niet gevonden</h1>
+		<p>De link is mogelijk verouderd of het adres is niet juist ingevoerd.</p>
+		<ButtonLink href="/" size="large">Terug naar home</ButtonLink>
+	</section>
+</BaseLayout>
