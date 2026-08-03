@@ -10,7 +10,7 @@ Node server.
 Requirements: Node.js 22.12 or newer.
 
 ```sh
-npm install
+npm ci
 cp .env.example .env
 npm run dev
 ```
@@ -26,6 +26,26 @@ npm start
 ```
 
 `npm start` serves the production build from `dist/server/entry.mjs`.
+
+## Docker
+
+Build and run the production image:
+
+```sh
+docker build -t tofleven .
+docker run --rm -p 4321:4321 --env-file .env tofleven
+```
+
+The container listens on port `4321` and runs as the unprivileged `node` user.
+Set the contact delivery variables from `.env.example` in the deployment
+environment; do not copy a production `.env` file into the image.
+
+## Continuous integration
+
+The GitHub Actions build runs the Astro checks, creates the production build,
+and verifies the Docker image on pushes and pull requests for `main` and
+the `release` or `release/**` branches. It can also be started manually from the
+Actions tab.
 
 ## Routes
 
