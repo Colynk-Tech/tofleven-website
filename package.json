@@ -1,5 +1,7 @@
 {
-  "name": "outputs-tofleven-astro",
+  "name": "tofleven-astro",
+  "private": true,
+  "description": "Bilingual website for Tofleven, built with Astro.",
   "type": "module",
   "version": "0.0.1",
   "engines": {
