@@ -18,6 +18,36 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
+	<div class="footer-registrations">
+		<div
+			class="shell footer-registrations__inner"
+			aria-label={locale === "nl" ? "Beroepsregistraties" : "Professional registrations"}
+		>
+			<p>{locale === "nl" ? "Beroepsregistraties" : "Professional registrations"}</p>
+			<div class="footer-registration-logos">
+				<img
+					class="footer-registration-logo footer-registration-logo--eft"
+					src="/images/registrations/eft-logo.png"
+					alt="EFT – samen voor betere relaties"
+					width="300"
+					height="100"
+					loading="lazy"
+					decoding="async"
+				/>
+				<span aria-hidden="true"></span>
+				<img
+					class="footer-registration-logo footer-registration-logo--skj"
+					src="/images/registrations/skj-logo.png"
+					alt="SKJ Kwaliteitsregister Jeugd"
+					width="270"
+					height="150"
+					loading="lazy"
+					decoding="async"
+				/>
+			</div>
+		</div>
+	</div>
+
 	<div class="shell footer-inner">
 		<div class="footer-brand">
 			<span class="footer-brand__name">Tofleven</span>

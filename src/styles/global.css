@@ -1064,6 +1064,56 @@ select.form-control {
 	color: var(--color-white);
 }
 
+.footer-registrations {
+	border-top: 1px solid var(--border-soft);
+	background: var(--bg-surface);
+	color: var(--text-heading);
+}
+
+.footer-registrations__inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: clamp(2rem, 7vw, 6rem);
+	padding-block: var(--space-5);
+}
+
+.footer-registrations__inner > p {
+	margin: 0;
+	font-family: var(--font-display);
+	font-size: 1.05rem;
+	font-style: italic;
+	font-variation-settings: var(--font-display-settings);
+	font-weight: 550;
+	white-space: nowrap;
+}
+
+.footer-registration-logos {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.footer-registration-logos > span {
+	width: 1px;
+	height: 3.5rem;
+	background: var(--border-soft);
+}
+
+.footer-registration-logo {
+	height: auto;
+	object-fit: contain;
+}
+
+.footer-registration-logo--eft {
+	width: clamp(12.5rem, 20vw, 15rem);
+}
+
+.footer-registration-logo--skj {
+	width: clamp(8.5rem, 14vw, 10.25rem);
+}
+
 .footer-bottom {
 	display: flex;
 	flex-wrap: wrap;
@@ -1299,6 +1349,35 @@ select.form-control {
 	.footer-bottom {
 		align-items: flex-start;
 		flex-direction: column;
+	}
+
+	.footer-registrations {
+		border-top: 0;
+	}
+
+	.footer-registrations__inner {
+		align-items: flex-start;
+		flex-direction: column;
+		gap: var(--space-3);
+		padding-block: var(--space-4);
+	}
+
+	.footer-registration-logos {
+		width: 100%;
+		justify-content: space-between;
+		gap: var(--space-4);
+	}
+
+	.footer-registration-logo--eft {
+		width: min(58%, 12.5rem);
+	}
+
+	.footer-registration-logo--skj {
+		width: min(34%, 8rem);
+	}
+
+	.footer-registration-logos > span {
+		height: 2.75rem;
 	}
 
 	.footer-legal-links {
