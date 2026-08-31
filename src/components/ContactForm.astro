@@ -1,6 +1,10 @@
 ---
 import { actions, isInputError } from "astro:actions";
-import { getPath, type ContactPageContent, type Locale } from "../lib/content";
+import {
+	legalDocumentUrls,
+	type ContactPageContent,
+	type Locale,
+} from "../lib/content";
 
 interface Props {
 	locale: Locale;
@@ -25,24 +29,30 @@ const strings = locale === "nl"
 			rateLimit: "Er zijn te veel pogingen gedaan. Probeer het later opnieuw.",
 			previewSuccess:
 				"Dank voor je bericht. De formulierstroom werkt; in deze preview is geen e-mail verstuurd.",
-			messageHelp:
-				"Deel alleen wat nodig is om contact op te nemen. Stuur geen medische dossiers of zeer gevoelige informatie.",
-			emergencyNote:
-				"Dit formulier is niet geschikt voor spoed of crisissituaties.",
+			messageHelp: "Deel alleen wat nodig is om contact op te nemen",
+			emergencyNote: "Dit formulier is niet voor spoed of crisissituaties.",
+			emergencyHeading: "Direct hulp nodig?",
+			emergencyText:
+				"Bel 112 bij direct fysiek gevaar. Neem bij een psychische crisis contact op met je huisarts of huisartsenpost. Denk je aan zelfdoding? Bel 113 of gratis 0800-0113, of gebruik de chat op",
 			privacyPrefix: "Ik heb de",
+			privacyLinkLabel: "privacyverklaring",
+			opensNewTabLabel: "opent in een nieuw tabblad",
 		}
 	: {
-			selectPrompt: "Choose a subject",
+			selectPrompt: "Choose a topic",
 			requiredLabel: "Required field",
 			errorSummary: "Please check the highlighted fields.",
 			rateLimit: "There have been too many attempts. Please try again later.",
 			previewSuccess:
 				"Thank you. The form flow works; no email was sent from this preview.",
-			messageHelp:
-				"Only share what is needed for a reply. Do not send medical records or highly sensitive information.",
-			emergencyNote:
-				"This form is not suitable for emergencies or crisis situations.",
+			messageHelp: "Share only what is necessary to get in touch",
+			emergencyNote: "This form is not for emergencies or crisis situations.",
+			emergencyHeading: "Need urgent help?",
+			emergencyText:
+				"In the Netherlands, call 112 if there is immediate physical danger. For a mental-health crisis, contact your GP or out-of-hours GP service. If you are thinking about suicide, call 113 or freephone 0800-0113, or use the chat at",
 			privacyPrefix: "I have read the",
+			privacyLinkLabel: "privacy policy",
+			opensNewTabLabel: "opens in a new tab",
 		};
 
 const subjects = [
@@ -71,6 +81,16 @@ const initialStatusMessage = serverSuccess
 ---
 
 <div class="form-card" data-form-wrapper>
+	<aside class="emergency-notice" aria-labelledby={`emergency-heading-${locale}`}>
+		<h2 id={`emergency-heading-${locale}`}>{strings.emergencyHeading}</h2>
+		<p>
+			{strings.emergencyText}{" "}
+			<a href="https://www.113.nl/" target="_blank" rel="noopener noreferrer">
+				113.nl<span class="field-honeypot"> ({strings.opensNewTabLabel})</span>
+			</a>
+		</p>
+	</aside>
+
 	<div
 		class="form-status"
 		data-form-status
@@ -215,7 +235,7 @@ const initialStatusMessage = serverSuccess
 					aria-describedby={`message-help-${locale} message-error-${locale}`}
 				></textarea>
 				<p class="field-help" id={`message-help-${locale}`}>
-					{strings.messageHelp}
+					{strings.messageHelp}{" "}
 					<strong>{strings.emergencyNote}</strong>
 				</p>
 				<p
@@ -240,7 +260,12 @@ const initialStatusMessage = serverSuccess
 					/>
 					<label for={`consent-${locale}`}>
 						{strings.privacyPrefix}{" "}
-						<a href={getPath(locale, "privacy")}>{formContent.consentLabel.replace(/^Ik ga akkoord met de |^I agree to the /, "")}</a>
+						<a
+							href={legalDocumentUrls.privacy[locale]}
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label={`${strings.privacyLinkLabel} (${strings.opensNewTabLabel})`}
+						>{strings.privacyLinkLabel}</a>
 						{locale === "nl" ? " gelezen." : "."}
 					</label>
 				</div>

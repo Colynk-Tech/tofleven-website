@@ -1,8 +1,9 @@
 ---
 import PageView from "../../components/PageView.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getPageMetadata } from "../../lib/seo";
 ---
 
-<BaseLayout locale="en" page="about">
+<BaseLayout locale="en" page="about" metadata={getPageMetadata("en", "about")}>
 	<PageView locale="en" page="about" />
 </BaseLayout>

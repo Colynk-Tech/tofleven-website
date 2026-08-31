@@ -9,6 +9,7 @@ const isSitesBuild = process.env.TOFLEVEN_TARGET === 'sites';
 export default defineConfig({
 	site: 'https://tofleven.nl',
 	output: 'static',
+	trailingSlash: 'always',
 	adapter: isSitesBuild
 		? cloudflare({
 				imageService: 'compile',

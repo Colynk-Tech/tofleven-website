@@ -2,6 +2,7 @@
 import {
 	content,
 	getPath,
+	legalDocumentUrls,
 	type Locale,
 } from "../lib/content";
 
@@ -34,14 +35,35 @@ const currentYear = new Date().getFullYear();
 		<div class="footer-column" aria-labelledby={`footer-contact-${locale}`}>
 			<h2 id={`footer-contact-${locale}`}>{footer.col2Title}</h2>
 			<ul>
-				<li><a href={`mailto:${footer.col2Items[0]}`}>{footer.col2Items[0]}</a></li>
-				<li>{footer.col2Items[1]}</li>
+				<li>{footer.locationLabel}</li>
 			</ul>
 		</div>
 	</div>
 
 	<div class="shell footer-bottom">
 		<span>© {currentYear} Tofleven</span>
-		<a href={getPath(locale, "privacy")}>{footer.privacyLink}</a>
+		<nav
+			class="footer-legal-links"
+			aria-label={locale === "nl" ? "Juridische documenten" : "Legal documents"}
+		>
+			<a
+				href={legalDocumentUrls.terms[locale]}
+				target="_blank"
+				rel="noopener noreferrer"
+				aria-label={`${footer.termsLink} (${footer.opensNewTabLabel})`}
+			>{footer.termsLink}</a>
+			<a
+				href={legalDocumentUrls.privacy[locale]}
+				target="_blank"
+				rel="noopener noreferrer"
+				aria-label={`${footer.privacyLink} (${footer.opensNewTabLabel})`}
+			>{footer.privacyLink}</a>
+			<a
+				href={legalDocumentUrls.disclaimer}
+				target="_blank"
+				rel="noopener noreferrer"
+				aria-label={`${footer.disclaimerLink} (${footer.opensNewTabLabel})`}
+			>{footer.disclaimerLink}</a>
+		</nav>
 	</div>
 </footer>

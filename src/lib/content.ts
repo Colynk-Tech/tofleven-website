@@ -1,88 +1,67 @@
 export const LOCALES = ["nl", "en"] as const;
-
 export type Locale = (typeof LOCALES)[number];
-
 export const DEFAULT_LOCALE: Locale = "nl";
 
-export const PAGE_KEYS = [
-  "home",
-  "about",
-  "accountability",
-  "contact",
-  "privacy",
-] as const;
-
+export const PAGE_KEYS = ["home", "about", "accountability", "contact"] as const;
 export type PageKey = (typeof PAGE_KEYS)[number];
-export type NavPageKey = Exclude<PageKey, "home" | "privacy">;
-
+export type NavPageKey = Exclude<PageKey, "home">;
 export type LocalizedPath =
   | "/"
-  | "/over-mij"
-  | "/verantwoording"
-  | "/contact"
-  | "/privacy"
+  | "/over-mij/"
+  | "/verantwoording/"
+  | "/contact/"
   | "/en/"
-  | "/en/about"
-  | "/en/approach"
-  | "/en/contact"
-  | "/en/privacy";
+  | "/en/about/"
+  | "/en/approach/"
+  | "/en/contact/";
 
-export interface SeoContent {
-  title: string;
-  description: string;
-}
-
-export interface NavItem {
-  page: NavPageKey;
-  label: string;
-}
-
+export interface SeoContent { title: string; description: string }
+export interface NavItem { page: NavPageKey; label: string }
 export interface NavContent {
   ctaLabel: string;
   menuLabel: string;
   closeMenuLabel: string;
   items: readonly [NavItem, NavItem, NavItem];
 }
-
 export interface FooterContent {
   col1Title: string;
   col1Items: readonly [string, string];
   col2Title: string;
-  col2Items: readonly [string, string];
+  locationLabel: string;
   privacyLink: string;
+  termsLink: string;
+  disclaimerLink: string;
+  opensNewTabLabel: string;
 }
+
+export const legalDocumentUrls = {
+  disclaimer: "https://colynk-media.s3.eu-north-1.amazonaws.com/tofleven/Tofleven_disclaimer_en_copyright_NL_EN.pdf",
+  terms: {
+    nl: "https://colynk-media.s3.eu-north-1.amazonaws.com/tofleven/Tofleven_algemene_voorwaarden_NL.pdf",
+    en: "https://colynk-media.s3.eu-north-1.amazonaws.com/tofleven/Tofleven_general_terms_and_conditions_EN.pdf",
+  },
+  privacy: {
+    nl: "https://colynk-media.s3.eu-north-1.amazonaws.com/tofleven/Tofleven_privacy_en_cookieverklaring_NL.pdf",
+    en: "https://colynk-media.s3.eu-north-1.amazonaws.com/tofleven/Tofleven_privacy_and_cookie_statement_EN.pdf",
+  },
+} as const;
 
 export interface SharedContent {
   languageLabel: string;
   skipLink: string;
   nav: NavContent;
   footer: FooterContent;
+  reviewLabels: { owner: string; reviewer: string; lastReviewed: string };
 }
-
-export interface InfoCardContent {
-  eyebrow: string;
-  title: string;
-  body: string;
-}
-
+export interface InfoCardContent { eyebrow: string; title: string; body: string }
 export interface HomePageContent {
   seo: SeoContent;
-  hero: {
-    eyebrow: string;
-    title: string;
-    intro: string;
-    ctaPrimary: string;
-    ctaSecondary: string;
-  };
+  hero: { eyebrow: string; title: string; intro: string; ctaPrimary: string; ctaSecondary: string };
   method: {
     eyebrow: string;
     title: string;
     lede: string;
-    cards: readonly [
-      InfoCardContent,
-      InfoCardContent,
-      InfoCardContent,
-    ];
+    cards: readonly [InfoCardContent, InfoCardContent, InfoCardContent];
   };
   forWhom: {
     eyebrow: string;
@@ -90,369 +69,223 @@ export interface HomePageContent {
     lede: string;
     trainings: readonly [InfoCardContent, InfoCardContent];
   };
-  band: {
-    title: string;
-    body: string;
-    cta: string;
-  };
+  band: { title: string; body: string; cta: string };
 }
-
+export interface TrainingHistoryItem { period: string; label: string }
 export interface AboutPageContent {
   seo: SeoContent;
   eyebrow: string;
   name: string;
   photoCaption: string;
-  paragraphs: readonly [string, string, string];
-  credentials: readonly [string, string];
+  paragraphs: readonly string[];
+  trainingTitle: string;
+  trainingIntro: string;
+  trainingHistory: readonly TrainingHistoryItem[];
+  registrationTitle: string;
+  registrationPending: string;
   ctaPrimary: string;
   ctaSecondary: string;
 }
-
 export interface AccountabilityPageContent {
   seo: SeoContent;
   eyebrow: string;
   title: string;
   intro: readonly [string, string];
-  pillars: readonly [
-    InfoCardContent,
-    InfoCardContent,
-    InfoCardContent,
-  ];
-  reassurance: {
-    title: string;
-    body: string;
-  };
+  pillars: readonly [InfoCardContent, InfoCardContent, InfoCardContent];
+  reassurance: { title: string; body: string };
   cta: string;
 }
 
-export const CONTACT_FORM_STATES = [
-  "idle",
-  "submitting",
-  "success",
-  "error",
-] as const;
-
+export const CONTACT_FORM_STATES = ["idle", "submitting", "success", "error"] as const;
 export type ContactFormState = (typeof CONTACT_FORM_STATES)[number];
-
 export interface ContactFormContent {
-  fields: {
-    name: string;
-    email: string;
-    subject: string;
-    message: string;
-    messagePlaceholder: string;
-  };
+  fields: { name: string; email: string; subject: string; message: string; messagePlaceholder: string };
   subjectOptions: readonly [string, string, string, string];
   consentLabel: string;
   submit: string;
-  states: {
-    submitting: string;
-    success: string;
-    error: string;
-  };
-  validation: {
-    required: string;
-    invalidEmail: string;
-    consentRequired: string;
-  };
+  states: { submitting: string; success: string; error: string };
+  validation: { required: string; invalidEmail: string; consentRequired: string };
 }
-
 export interface ContactPageContent {
   seo: SeoContent;
   eyebrow: string;
   title: string;
   lede: string;
-  emailLabel: string;
-  emailValue: string;
   locationLabel: string;
-  locationValue: string;
-  placeholderNote: string;
   form: ContactFormContent;
 }
-
-export interface PrivacySectionContent {
-  title: string;
-  body: string;
-}
-
-export interface PrivacyPageContent {
-  seo: SeoContent;
-  title: string;
-  placeholderNote: string;
-  sections: readonly [
-    PrivacySectionContent,
-    PrivacySectionContent,
-    PrivacySectionContent,
-    PrivacySectionContent,
-  ];
-}
-
 export interface PageContentMap {
   home: HomePageContent;
   about: AboutPageContent;
   accountability: AccountabilityPageContent;
   contact: ContactPageContent;
-  privacy: PrivacyPageContent;
 }
-
 export type PageContent = PageContentMap[PageKey];
+export interface SiteContent { shared: SharedContent; pages: PageContentMap }
 
-export interface SiteContent {
-  shared: SharedContent;
-  pages: PageContentMap;
+export interface OwnerReviewSlot {
+  status: "owner-review-required";
+  heading: string;
+  draft: string;
 }
+
+/** Draft trust copy is deliberately not rendered until the owner approves it. */
+export const trustContentDrafts = {
+  nl: [
+    { status: "owner-review-required", heading: "Reikwijdte van de begeleiding", draft: "Tofleven biedt therapeutische begeleiding en is geen vervanging voor huisartsenzorg, specialistische ggz of spoedeisende hulp." },
+    { status: "owner-review-required", heading: "Wanneer Tofleven niet passend is", draft: "Bij acute onveiligheid, een crisis of een hulpvraag die specialistische medische of psychiatrische zorg vraagt, is andere of aanvullende hulp nodig." },
+    { status: "owner-review-required", heading: "Crisisroute", draft: "Bel bij direct fysiek gevaar 112. Neem bij een psychische crisis contact op met je huisarts of huisartsenpost. Bij gedachten aan zelfdoding kun je 113 of gratis 0800-0113 bellen of chatten via 113.nl." },
+    { status: "owner-review-required", heading: "Vertrouwelijkheid en privacy", draft: "Leg uit welke informatie vertrouwelijk wordt behandeld, welke uitzonderingen gelden en hoe persoonsgegevens en dossiers worden verwerkt." },
+    { status: "owner-review-required", heading: "Klachten", draft: "Voeg de goedgekeurde klachtenroute, verantwoordelijke organisatie en contact- of verificatielink toe." },
+    { status: "owner-review-required", heading: "Verwijzing en samenwerking", draft: "Beschrijf wanneer en met toestemming wordt afgestemd met huisarts, school of andere betrokken professionals." },
+  ],
+  en: [
+    { status: "owner-review-required", heading: "Scope of support", draft: "Tofleven offers therapeutic support and does not replace GP care, specialist mental-health care, or emergency services." },
+    { status: "owner-review-required", heading: "When Tofleven may not be appropriate", draft: "Acute safety concerns, a crisis, or needs requiring specialist medical or psychiatric care call for other or additional support." },
+    { status: "owner-review-required", heading: "Crisis routes", draft: "In the Netherlands, call 112 if there is immediate physical danger. For a mental-health crisis, contact your GP or out-of-hours GP service. For suicidal thoughts, call 113 or freephone 0800-0113, or use the chat at 113.nl." },
+    { status: "owner-review-required", heading: "Confidentiality and privacy", draft: "Explain what is confidential, which exceptions apply, and how personal information and records are handled." },
+    { status: "owner-review-required", heading: "Complaints", draft: "Add the approved complaints route, responsible body, and contact or verification link." },
+    { status: "owner-review-required", heading: "Referral and professional collaboration", draft: "Describe when, and with consent, the practice coordinates with a GP, school, or other professionals." },
+  ],
+} as const satisfies Record<Locale, readonly OwnerReviewSlot[]>;
 
 export const routes = {
-  home: {
-    nl: "/",
-    en: "/en/",
-  },
-  about: {
-    nl: "/over-mij",
-    en: "/en/about",
-  },
-  accountability: {
-    nl: "/verantwoording",
-    en: "/en/approach",
-  },
-  contact: {
-    nl: "/contact",
-    en: "/en/contact",
-  },
-  privacy: {
-    nl: "/privacy",
-    en: "/en/privacy",
-  },
+  home: { nl: "/", en: "/en/" },
+  about: { nl: "/over-mij/", en: "/en/about/" },
+  accountability: { nl: "/verantwoording/", en: "/en/approach/" },
+  contact: { nl: "/contact/", en: "/en/contact/" },
 } as const satisfies Record<PageKey, Record<Locale, LocalizedPath>>;
 
 export const content = {
   nl: {
     shared: {
       languageLabel: "Taal",
-      skipLink: "Ga naar de inhoud",
+      skipLink: "Ga naar inhoud",
       nav: {
         ctaLabel: "Neem contact op",
         menuLabel: "Menu openen",
         closeMenuLabel: "Menu sluiten",
         items: [
           { page: "about", label: "Over mij" },
-          { page: "accountability", label: "Verantwoording" },
+          { page: "accountability", label: "Werkwijze" },
           { page: "contact", label: "Contact" },
         ],
       },
       footer: {
-        col1Title: "Over Tofleven",
-        col1Items: ["Over mij", "Verantwoording"],
-        col2Title: "Contact",
-        col2Items: ["info@tofleven.nl", "Enter, Overijssel"],
+        col1Title: "Tofleven",
+        col1Items: ["Over Gérita de Wilde", "Werkwijze en visie"],
+        col2Title: "Locatie",
+        locationLabel: "Enter, Nederland",
         privacyLink: "Privacyverklaring",
+        termsLink: "Algemene voorwaarden",
+        disclaimerLink: "Disclaimer & copyright",
+        opensNewTabLabel: "opent in een nieuw tabblad",
       },
+      reviewLabels: { owner: "Inhoudseigenaar", reviewer: "Beoordeeld door", lastReviewed: "Laatst beoordeeld" },
     },
     pages: {
       home: {
         seo: {
-          title: "Tofleven | Therapie van binnenuit in Enter",
-          description:
-            "Gerita de Wilde helpt kinderen, ouders en volwassenen verbinding te vinden met zichzelf en met elkaar, vanuit geest, ziel en lichaam.",
+          title: "Integratief therapeut in Enter | Tofleven",
+          description: "Tofleven biedt integratieve, ervaringsgerichte begeleiding in Enter voor kinderen, jongeren, volwassenen, ouders en stellen.",
         },
         hero: {
-          eyebrow: "EFT-therapeut · Enter",
-          title: "Therapie van binnenuit, geworteld in wie je bent",
-          intro:
-            "Ik ben Gerita de Wilde. Vanuit geest, ziel en lichaam help ik kinderen, ouders en volwassenen weer verbinding te vinden, met zichzelf en met elkaar.",
-          ctaPrimary: "Maak kennis",
-          ctaSecondary: "Lees over mijn werkwijze",
+          eyebrow: "Inzichtgevende, ervaringsgerichte therapie — herstel van binnenuit",
+          title: "Integratieve therapie in Enter",
+          intro: "Tofleven biedt persoonlijke en relationele begeleiding aan kinderen, jongeren, volwassenen, ouders en stellen. In een eerste kennismaking kun je onderzoeken of de werkwijze en het contact bij je passen.",
+          ctaPrimary: "Vraag een kennismaking aan",
+          ctaSecondary: "Bekijk de werkwijze",
         },
         method: {
-          eyebrow: "Werkwijze",
-          title: "Worteltherapie: werken van binnenuit",
-          lede:
-            "Geen quick fix, maar aandacht voor wat er onder de oppervlakte speelt, vanuit een bijbels mensbeeld, zonder opgeheven vinger.",
+          eyebrow: "Therapeutische begeleiding",
+          title: "Aandacht voor wat er onder de oppervlakte speelt",
+          lede: "De begeleiding verbindt inzichten uit verschillende psychologische stromingen met aandacht voor denken, voelen, willen en kiezen. Er is geen vast recept: de hulpvraag en jouw eigen tempo vormen het vertrekpunt.",
           cards: [
-            {
-              eyebrow: "Emoties",
-              title: "Emotieherkenning",
-              body:
-                "Leren voelen én begrijpen wat er in je omgaat, met Emotionally Focused Therapy (EFT) als basis.",
-            },
-            {
-              eyebrow: "Verbinding",
-              title: "Relatietherapie",
-              body:
-                "Voor stellen die weer naar elkaar toe willen groeien, ook na een periode van afstand.",
-            },
-            {
-              eyebrow: "Identiteit",
-              title: "Wie je in de kern bent",
-              body:
-                "Ruimte om jezelf te ontdekken, voorbij aanpassing en overleven, vanuit je eigen authenticiteit.",
-            },
+            { eyebrow: "Emoties", title: "Emoties herkennen", body: "Je kunt leren voelen en begrijpen wat er in je omgaat. Emotionally Focused Therapy (EFT) is een van de benaderingen die daarbij wordt gebruikt." },
+            { eyebrow: "Verbinding", title: "Relatietherapie", body: "Voor stellen die patronen tussen hen willen onderzoeken en opnieuw contact met elkaar willen zoeken, ook na een periode van afstand." },
+            { eyebrow: "Identiteit", title: "Ruimte voor wie je bent", body: "Een plek om te onderzoeken wat bij je past, welke aanpassingspatronen je kent en welke keuzes je zelf wilt maken." },
           ],
         },
         forWhom: {
-          eyebrow: "Voor wie",
-          title: "Begeleiding en trainingen",
-          lede:
-            "Voor kinderen, ouders en volwassenen, individueel of samen. Ook als groep, via een van mijn trainingen.",
+          eyebrow: "Verschillende hulpvragen",
+          title: "Therapie en trainingen",
+          lede: "De huidige begeleiding richt zich op kinderen en ouders, jongeren, volwassenen en stellen. Genoemde thema’s zijn onder meer zingeving, angst, onzekerheid, emotieregulatie, identiteit, somberheid en hoogbegaafdheid. Bespreek in een kennismaking of jouw vraag binnen de expertise en het aanbod past.",
           trainings: [
-            {
-              eyebrow: "Training",
-              title: "Houd me vast",
-              body:
-                "Een praktische huwelijkstraining over wat er misgaat tussen partners, en hoe je elkaar emotioneel weer vindt.",
-            },
-            {
-              eyebrow: "Training",
-              title: "Ouder-emotiecoaching",
-              body:
-                "Leer de emoties van je kind herkennen en begeleiden, zodat je kind zich gezien en gehoord voelt.",
-            },
+            { eyebrow: "Relatietraining", title: "Houd Me Vast", body: "Een praktische training rond terugkerende patronen tussen partners, emotionele verbinding, liefde en vergeving." },
+            { eyebrow: "Training voor opvoeders", title: "Emoties coachen", body: "Een training over een emotioneel begeleidende houding naar kinderen, gebaseerd op de methode van John Gottman." },
           ],
         },
-        band: {
-          title: "Nieuwsgierig naar de visie achter mijn werk?",
-          body:
-            "Ik leg graag uit hoe ik theologie en psychotherapie combineer, en waarom dat voor iedereen toegankelijk is.",
-          cta: "Lees mijn verantwoording",
-        },
+        band: { title: "Waarom doe ik wat ik doe?", body: "Samen onderzoeken wat kan bijdragen aan groei en een tof leven.", cta: "Lees over mijn werkwijze en visie" },
       },
       about: {
         seo: {
-          title: "Over Gerita de Wilde | Tofleven",
-          description:
-            "Maak kennis met Gerita de Wilde, EFT-therapeut en geregistreerd jeugd- en gezinsprofessional in Enter.",
+          title: "Gérita de Wilde – integratief therapeut | Tofleven",
+          description: "Maak kennis met Gérita de Wilde, integratief therapeut bij Tofleven in Enter, en lees over haar visie, ervaring en opleidingstraject.",
         },
-        eyebrow: "Over mij",
-        name: "Gerita de Wilde",
-        photoCaption: "Portretfoto van Gerita, nog toe te voegen.",
+        eyebrow: "Een persoonlijke ontdekkingsreis",
+        name: "Gérita de Wilde – integratief therapeut",
+        photoCaption: "Portret van Gérita de Wilde.",
         paragraphs: [
-          "Ik combineer theologie en psychotherapie: ik geloof dat we pas echt tot bloei komen als geest, ziel en lichaam gezien worden. Als EFT-therapeut en geregistreerd jeugd- en gezinsprofessional begeleid ik kinderen, ouders en volwassenen, altijd vanuit authenticiteit en van binnenuit.",
-          "Ik begon met het begeleiden van mensen met verslavingsproblematiek en werk nu vooral met relatietherapie en identiteitsvragen. Je komt met een hulpvraag; samen kijken we wat er nodig is, tot je zelf weer kunt zien wat er speelt.",
-          "Je mag hier komen zoals je bent. Samen kijken we naar wat er onder de oppervlakte speelt, in jouw tempo.",
+          "Ik ben Gérita de Wilde en begeleid vanuit Tofleven in Enter kinderen en ouders, jongeren, volwassenen en stellen. In een kennismaking onderzoeken we samen of mijn manier van werken aansluit bij jou en je hulpvraag.",
+          "Mijn eigen leven ervaar ik als een ontdekkingsreis: van mezelf kwijtraken naar mezelf terugvinden, ervaringen verwerken en talenten ontwikkelen. Mijn christelijke geloof is daarin belangrijk. Voor mij is God liefdevol en goed, en heeft ieder mens een unieke waarde.",
+          "Aandacht, acceptatie, respect, een luisterend oor, tijd en begrip kunnen ruimte geven om verder te groeien. Mijn huwelijk en gezin, missiereizen, het leiden van een geloofsgemeenschap en de ontmoetingen met uiteenlopende mensen hebben mijn blik mede gevormd.",
+          "In mijn werk begeleid ik kinderen en hun ouders, jongeren, volwassenen en koppels. Ik kijk naar de samenhang tussen geest, ziel en lichaam en werk vanuit vertrouwen, zonder vooraf een uitkomst te beloven.",
+          "Neem gerust contact op voor een eerste kennismaking. Daarna beslis je zelf of het contact en de werkwijze bij je passen.",
         ],
-        credentials: [
-          "EFT-therapeut",
-          "Jeugd- en gezinsprofessional (geregistreerd)",
+        trainingTitle: "Opleidingen en trainingen",
+        trainingIntro: "Onderstaande tijdlijn is gebaseerd op de door de eigenaar aangeleverde geschiedenis. Titels, opleiders, jaartallen en actuele geldigheid moeten vóór publicatie worden gecontroleerd.",
+        trainingHistory: [
+          { period: "1986", label: "Verpleegkundige opleiding" },
+          { period: "1997–2008", label: "Focussen; psychoanalytische, pastorale en cliëntgerichte integratieve therapie" },
+          { period: "2008", label: "Ontwikkelingspsychologie" },
+          { period: "2012", label: "Emotionally Focused Therapy en Houd Me Vast" },
+          { period: "2013", label: "Children Focusing" },
+          { period: "2018", label: "Dynamiek op tafel" },
+          { period: "2023", label: "Emotionally Focused Individual Therapy" },
+          { period: "2024", label: "Kindertekeningen begrijpen" },
+          { period: "2026", label: "Jeugd en Gezin" },
         ],
-        ctaPrimary: "Neem contact op",
-        ctaSecondary: "Lees mijn visie",
+        registrationTitle: "Actieve registraties",
+        registrationPending: "Actieve registraties, nummers en verificatielinks worden pas gepubliceerd nadat de eigenaar deze heeft bevestigd.",
+        ctaPrimary: "Vraag een kennismaking aan",
+        ctaSecondary: "Lees over mijn werkwijze",
       },
       accountability: {
         seo: {
-          title: "Visie en werkwijze | Tofleven",
-          description:
-            "Lees hoe Gerita de Wilde theologie en psychotherapie combineert in worteltherapie, met ruimte voor iedereen.",
+          title: "Werkwijze: integratieve therapie en EFT | Tofleven",
+          description: "Lees hoe Tofleven in Enter integratief en ervaringsgericht werkt, met aandacht voor emoties, relaties en de mens als geheel.",
         },
-        eyebrow: "Visie",
-        title: "Waar theologie en psychotherapie samenkomen",
+        eyebrow: "Visie en werkwijze",
+        title: "Werkwijze: integratieve therapie en EFT",
         intro: [
-          "Ik werk vanuit een bijbels mensbeeld: je bent geest, ziel en lichaam, en pas als alle drie gezien worden, komt er echt ruimte om te groeien. Deze visie is de basis van mijn werk, maar geen voorwaarde om bij mij te komen.",
-          "Ik noem dit worteltherapie: niet aan de symptomen sleutelen, maar samen kijken naar de wortel van wat er speelt, van binnenuit, met aandacht voor je eigen authenticiteit en de keuzes die daarbij horen.",
+          "We beginnen bij jouw hulpvraag en onderzoeken wat aandacht nodig heeft. Er is ruimte voor wat zich aandient, met respect, zonder waardeoordeel en in een tempo dat bij jou past.",
+          "Samen kun je patronen en oorzaken onderzoeken en ontdekken welke andere keuzes mogelijk zijn. Jij houdt de regie en bepaalt steeds of de aanpak bij je past.",
         ],
         pillars: [
-          {
-            eyebrow: "Mensbeeld",
-            title: "Geest, ziel en lichaam",
-            body:
-              "Klachten staan nooit los van wie je bent. Ik kijk naar het geheel, niet alleen naar het symptoom.",
-          },
-          {
-            eyebrow: "Methode",
-            title: "Van binnenuit werken",
-            body:
-              "Met Emotionally Focused Therapy leer je je emoties herkennen en begrijpen, in plaats van ze te vermijden.",
-          },
-          {
-            eyebrow: "Toegankelijkheid",
-            title: "Voor iedereen",
-            body:
-              "Mijn visie is bijbels geïnspireerd, maar mijn praktijk staat open voor iedereen, ongeacht je eigen geloof of levensvisie.",
-          },
+          { eyebrow: "Mensbeeld", title: "Geest, ziel en lichaam", body: "Een hulpvraag staat niet los van wie je bent. Daarom kijken we naar de mens als geheel en niet alleen naar losse klachten." },
+          { eyebrow: "Methode", title: "Ervaringsgericht werken", body: "Door aandacht te geven aan wat er in je gebeurt, kun je emoties en reactiepatronen beter leren herkennen en begrijpen." },
+          { eyebrow: "Eigen keuze", title: "Ontdekken, leren en groeien", body: "Je onderzoekt wat voor jou van waarde is en welke stap je wilt zetten. De begeleiding ondersteunt dat proces, zonder een resultaat te garanderen." },
         ],
-        reassurance: {
-          title: "Moet ik gelovig zijn om hier te komen?",
-          body:
-            "Nee. Mijn manier van werken is geworteld in een bijbels mensbeeld, maar ik werk met de methodes en het gesprek dat bij jou past, zonder dat geloof onderwerp van gesprek moet zijn. Iedereen is welkom, met of zonder eigen overtuiging.",
-        },
-        cta: "Maak kennis",
+        reassurance: { title: "Wat kun je verwachten?", body: "Een traject kan inzicht geven in oorzaken, emoties en patronen die niet meer helpen. Dat kan ruimte bieden om andere keuzes te oefenen. Wat passend en haalbaar is, verschilt per persoon en wordt samen besproken." },
+        cta: "Bespreek je hulpvraag",
       },
       contact: {
         seo: {
-          title: "Contact | Tofleven",
-          description:
-            "Neem contact op met Tofleven in Enter. Gerita de Wilde reageert meestal binnen twee werkdagen.",
+          title: "Contact met Tofleven in Enter",
+          description: "Neem via het beveiligde contactformulier contact op met Tofleven in Enter voor een eerste kennismaking over je hulpvraag.",
         },
-        eyebrow: "Contact",
-        title: "Neem contact op",
-        lede:
-          "Vul het formulier in of stuur direct een mail. Ik reageer meestal binnen twee werkdagen.",
-        emailLabel: "E-mail",
-        emailValue: "info@tofleven.nl",
-        locationLabel: "Praktijk",
-        locationValue: "Enter, Overijssel",
-        placeholderNote:
-          "Contactgegevens zijn placeholders. Worden aangevuld door de klant.",
+        eyebrow: "Eerste stap",
+        title: "Contact met Tofleven in Enter",
+        lede: "Gebruik het formulier voor een eerste kennismaking. Deel nog geen uitgebreide of gevoelige gezondheidsinformatie; een reactie en vervolgstap worden daarna afgestemd.",
+        locationLabel: "Praktijklocatie",
         form: {
-          fields: {
-            name: "Naam",
-            email: "E-mailadres",
-            subject: "Onderwerp",
-            message: "Je bericht",
-            messagePlaceholder: "Vertel kort waarmee je hulp zoekt...",
-          },
-          subjectOptions: [
-            "Individuele therapie",
-            "Relatietherapie",
-            "Kind & ouder",
-            "Houd me vast training",
-          ],
+          fields: { name: "Naam", email: "E-mailadres", subject: "Onderwerp", message: "Je bericht", messagePlaceholder: "Vertel kort waarover je contact wilt opnemen" },
+          subjectOptions: ["Individuele therapie", "Relatietherapie", "Kind en ouders/verzorgers", "Houd Me Vast of emotiecoaching"],
           consentLabel: "Ik ga akkoord met de privacyverklaring",
           submit: "Versturen",
-          states: {
-            submitting: "Bezig met versturen...",
-            success: "Dank voor je bericht. Ik neem snel contact met je op.",
-            error:
-              "Het versturen is niet gelukt. Probeer het opnieuw of mail naar info@tofleven.nl.",
-          },
-          validation: {
-            required: "Vul dit veld in.",
-            invalidEmail: "Vul een geldig e-mailadres in.",
-            consentRequired:
-              "Ga akkoord met de privacyverklaring om je bericht te versturen.",
-          },
+          states: { submitting: "Bezig met versturen...", success: "Dank voor je bericht. Je ontvangt zo spoedig mogelijk een reactie.", error: "Het versturen is niet gelukt. Probeer het later opnieuw." },
+          validation: { required: "Vul dit veld in.", invalidEmail: "Vul een geldig e-mailadres in.", consentRequired: "Ga akkoord met de privacyverklaring om je bericht te versturen." },
         },
-      },
-      privacy: {
-        seo: {
-          title: "Privacyverklaring | Tofleven",
-          description:
-            "Lees hoe Tofleven omgaat met de persoonsgegevens die je via deze website deelt.",
-        },
-        title: "Privacyverklaring",
-        placeholderNote:
-          "Concepttekst. Dient nog te worden vervangen door een juridisch getoetste privacyverklaring.",
-        sections: [
-          {
-            title: "Wie we zijn",
-            body:
-              "Tofleven is de therapiepraktijk van Gerita de Wilde, gevestigd in Enter. Deze verklaring beschrijft hoe we omgaan met de gegevens die je via deze website deelt.",
-          },
-          {
-            title: "Welke gegevens we verzamelen",
-            body:
-              "Via het contactformulier verzamelen we je naam, e-mailadres, het gekozen onderwerp en je bericht. We verzamelen niet meer dan nodig is om te reageren op je vraag.",
-          },
-          {
-            title: "Waarvoor we deze gegevens gebruiken",
-            body:
-              "We gebruiken je gegevens uitsluitend om contact met je op te nemen over je aanvraag. Je gegevens worden niet verkocht of gedeeld met derden voor marketingdoeleinden.",
-          },
-          {
-            title: "Jouw rechten",
-            body:
-              "Je hebt altijd het recht om je gegevens in te zien, te laten aanpassen of te laten verwijderen. Neem hiervoor contact op via info@tofleven.nl.",
-          },
-        ],
       },
     },
   },
@@ -465,224 +298,126 @@ export const content = {
         menuLabel: "Open menu",
         closeMenuLabel: "Close menu",
         items: [
-          { page: "about", label: "About me" },
-          { page: "accountability", label: "My approach" },
+          { page: "about", label: "About" },
+          { page: "accountability", label: "Approach" },
           { page: "contact", label: "Contact" },
         ],
       },
       footer: {
-        col1Title: "About Tofleven",
-        col1Items: ["About me", "My approach"],
-        col2Title: "Contact",
-        col2Items: ["info@tofleven.nl", "Enter, the Netherlands"],
+        col1Title: "Tofleven",
+        col1Items: ["About Gérita de Wilde", "Approach and vision"],
+        col2Title: "Location",
+        locationLabel: "Enter, the Netherlands",
         privacyLink: "Privacy policy",
+        termsLink: "General terms and conditions",
+        disclaimerLink: "Disclaimer & copyright",
+        opensNewTabLabel: "opens in a new tab",
       },
+      reviewLabels: { owner: "Content owner", reviewer: "Reviewed by", lastReviewed: "Last reviewed" },
     },
     pages: {
       home: {
         seo: {
-          title: "Tofleven | Therapy from the inside out",
-          description:
-            "Gerita de Wilde helps children, parents and adults find connection with themselves and each other, working from spirit, soul and body.",
+          title: "Integrative therapist in Enter | Tofleven",
+          description: "Tofleven offers integrative, experiential support in Enter for children, young people, adults, parents, and couples.",
         },
         hero: {
-          eyebrow: "EFT therapist · Enter",
-          title: "Therapy from the inside out, rooted in who you are",
-          intro:
-            "I'm Gerita de Wilde. Working from spirit, soul and body, I help children, parents and adults find connection again, with themselves and with each other.",
-          ctaPrimary: "Get in touch",
-          ctaSecondary: "Read about my approach",
+          eyebrow: "Insight-oriented, experiential therapy — recovery from within",
+          title: "Integrative therapy in Enter",
+          intro: "Tofleven offers individual and relationship-focused support for children, young people, adults, parents, and couples. An introductory conversation can help you decide whether the approach and personal fit feel right for you.",
+          ctaPrimary: "Request an introduction",
+          ctaSecondary: "Explore the approach",
         },
         method: {
-          eyebrow: "Approach",
-          title: "Root therapy: working from the inside out",
-          lede:
-            "Not a quick fix, but attention to what's happening beneath the surface, grounded in a biblical view of the person, without judgement.",
+          eyebrow: "Therapeutic support",
+          title: "Attention to what lies beneath the surface",
+          lede: "The approach brings together ideas from several psychological traditions while paying attention to thought, emotion, intention, and choice. There is no fixed formula: your question and pace are the starting point.",
           cards: [
-            {
-              eyebrow: "Emotions",
-              title: "Recognising your emotions",
-              body:
-                "Learning to feel and understand what's going on inside you, using Emotionally Focused Therapy (EFT) as a foundation.",
-            },
-            {
-              eyebrow: "Connection",
-              title: "Relationship therapy",
-              body:
-                "For couples who want to grow towards each other again, even after a period of distance.",
-            },
-            {
-              eyebrow: "Identity",
-              title: "Who you are at the core",
-              body:
-                "Space to discover yourself, beyond adapting and surviving, grounded in your own authenticity.",
-            },
+            { eyebrow: "Emotions", title: "Recognising emotions", body: "You can learn to notice and understand what is happening inside you. Emotionally Focused Therapy (EFT) is one approach used in this work." },
+            { eyebrow: "Connection", title: "Relationship therapy", body: "For couples who want to explore recurring patterns and seek renewed contact, including after a period of distance." },
+            { eyebrow: "Identity", title: "Space for who you are", body: "A place to explore what fits you, which patterns of adaptation you recognise, and which choices you want to make." },
           ],
         },
         forWhom: {
-          eyebrow: "Who it's for",
-          title: "Guidance and trainings",
-          lede:
-            "For children, parents and adults, individually or together. Also as a group, through one of my trainings.",
+          eyebrow: "Different support needs",
+          title: "Therapy and training",
+          lede: "Current support is intended for children and parents, young people, adults, and couples. Topics mentioned include meaning, anxiety, uncertainty, emotional regulation, identity, low mood, and giftedness. Use an introductory conversation to check whether your needs fit the practice's expertise and offer.",
           trainings: [
-            {
-              eyebrow: "Training",
-              title: "Hold Me Tight",
-              body:
-                "A practical marriage training about what goes wrong between partners, and how to find each other emotionally again.",
-            },
-            {
-              eyebrow: "Training",
-              title: "Parent emotion coaching",
-              body:
-                "Learn to recognise and guide your child's emotions, so your child feels seen and heard.",
-            },
+            { eyebrow: "Relationship training", title: "Hold Me Tight", body: "Practical training around recurring patterns between partners, emotional connection, love, and forgiveness." },
+            { eyebrow: "Training for caregivers", title: "Emotion Coaching", body: "Training in an emotion-guiding approach to children, based on John Gottman's method." },
           ],
         },
-        band: {
-          title: "Curious about the vision behind my work?",
-          body:
-            "I'm happy to explain how I combine theology and psychotherapy, and why that's accessible to everyone.",
-          cta: "Read my approach",
-        },
+        band: { title: "Why do I do this work?", body: "Exploring together what may support growth and a fulfilling life.", cta: "Read about my approach and vision" },
       },
       about: {
         seo: {
-          title: "About Gerita de Wilde | Tofleven",
-          description:
-            "Meet Gerita de Wilde, an EFT therapist and registered youth and family professional based in Enter, the Netherlands.",
+          title: "Gérita de Wilde – integrative therapist | Tofleven",
+          description: "Meet Gérita de Wilde, integrative therapist at Tofleven in Enter, and read about her perspective, experience, and training history.",
         },
-        eyebrow: "About me",
-        name: "Gerita de Wilde",
-        photoCaption: "Portrait photo of Gerita, to be added.",
+        eyebrow: "A personal journey of discovery",
+        name: "Gérita de Wilde – integrative therapist",
+        photoCaption: "Portrait of Gérita de Wilde.",
         paragraphs: [
-          "I combine theology and psychotherapy: I believe we only truly flourish when spirit, soul and body are all seen. As an EFT therapist and a registered youth and family professional, I guide children, parents and adults, always from authenticity and from the inside out.",
-          "I started out guiding people with addiction issues, and now work mainly with relationship therapy and questions of identity. You come with a question; together we look at what's needed, until you can see for yourself what's going on.",
-          "You're welcome here just as you are. Together we look at what's happening beneath the surface, at your own pace.",
+          "I am Gérita de Wilde. Through Tofleven in Enter, I support children and parents, young people, adults, and couples. In an introductory conversation, we explore whether my way of working fits you and your question.",
+          "I experience my own life as a journey of discovery: losing and finding myself, processing experiences, and developing my abilities. My Christian faith is important to me. I believe God is loving and good, and that every person has unique worth.",
+          "Attention, acceptance, respect, a listening ear, time, and understanding can create room for growth. My marriage and family, mission trips, leadership of a faith community, and encounters with many different people have helped shape my perspective.",
+          "In my work, I support children and their parents, young people, adults, and couples. I consider the relationship between mind, soul, and body and work from trust, without promising a particular outcome.",
+          "You are welcome to request an introductory conversation. You can then decide for yourself whether the connection and approach feel right.",
         ],
-        credentials: [
-          "EFT therapist",
-          "Registered youth and family professional",
+        trainingTitle: "Education and training",
+        trainingIntro: "This timeline is based on the history supplied by the owner. Titles, providers, dates, and current validity must be checked before publication.",
+        trainingHistory: [
+          { period: "1986", label: "Nursing education" },
+          { period: "1997–2008", label: "Focusing; psychoanalytic, pastoral, and client-centred integrative therapy" },
+          { period: "2008", label: "Developmental psychology" },
+          { period: "2012", label: "Emotionally Focused Therapy and Hold Me Tight" },
+          { period: "2013", label: "Children Focusing" },
+          { period: "2018", label: "Dynamiek op tafel" },
+          { period: "2023", label: "Emotionally Focused Individual Therapy" },
+          { period: "2024", label: "Understanding children's drawings" },
+          { period: "2026", label: "Youth and Family" },
         ],
-        ctaPrimary: "Get in touch",
-        ctaSecondary: "Read my approach",
+        registrationTitle: "Active registrations",
+        registrationPending: "Active registrations, identifiers, and verification links will only be published after owner confirmation.",
+        ctaPrimary: "Request an introduction",
+        ctaSecondary: "Read about my approach",
       },
       accountability: {
         seo: {
-          title: "Vision and approach | Tofleven",
-          description:
-            "Read how Gerita de Wilde brings theology and psychotherapy together in root therapy, with room for everyone.",
+          title: "Approach: integrative therapy and EFT | Tofleven",
+          description: "Learn how Tofleven in Enter works integratively and experientially, with attention to emotions, relationships, and the whole person.",
         },
-        eyebrow: "Approach",
-        title: "Where theology and psychotherapy meet",
+        eyebrow: "Vision and approach",
+        title: "Approach: integrative therapy and EFT",
         intro: [
-          "I work from a biblical view of the person: you are spirit, soul and body, and only when all three are seen is there real room to grow. This view is the foundation of my work, but never a condition for coming to see me.",
-          "I call this root therapy: not tweaking symptoms, but looking together at the root of what's going on, from the inside out, with attention to your own authenticity and the choices that come with it.",
+          "We begin with your question and explore what needs attention. There is room for what emerges, with respect, without judgement, and at a pace that suits you.",
+          "Together, you may explore patterns and underlying causes and consider which different choices are possible. You remain in control and decide whether the approach continues to fit.",
         ],
         pillars: [
-          {
-            eyebrow: "View of the person",
-            title: "Spirit, soul and body",
-            body:
-              "Struggles are never separate from who you are. I look at the whole person, not just the symptom.",
-          },
-          {
-            eyebrow: "Method",
-            title: "Working from the inside out",
-            body:
-              "Through Emotionally Focused Therapy you learn to recognise and understand your emotions, instead of avoiding them.",
-          },
-          {
-            eyebrow: "Accessibility",
-            title: "For everyone",
-            body:
-              "My vision is biblically inspired, but my practice is open to everyone, regardless of your own faith or worldview.",
-          },
+          { eyebrow: "View of the person", title: "Mind, soul, and body", body: "A difficulty is not separate from who you are. The work therefore considers the whole person, rather than isolated symptoms alone." },
+          { eyebrow: "Method", title: "Experiential work", body: "By paying attention to what happens inside you, you can learn to recognise and understand emotions and response patterns more clearly." },
+          { eyebrow: "Your choice", title: "Discover, learn, and grow", body: "You explore what matters to you and which step you want to take. The support serves that process without guaranteeing an outcome." },
         ],
-        reassurance: {
-          title: "Do I need to be religious to come here?",
-          body:
-            "No. My way of working is rooted in a biblical view of the person, but I work with whatever method and conversation fits you. Faith doesn't have to be part of it. Everyone is welcome, with or without their own beliefs.",
-        },
-        cta: "Get in touch",
+        reassurance: { title: "What can you expect?", body: "A process may offer insight into underlying causes, emotions, and patterns that are no longer helpful. This can create room to practise different choices. What is appropriate and achievable varies from person to person and is discussed together." },
+        cta: "Discuss your support needs",
       },
       contact: {
         seo: {
-          title: "Contact | Tofleven",
-          description:
-            "Get in touch with Tofleven in Enter, the Netherlands. Gerita de Wilde usually replies within two working days.",
+          title: "Contact Tofleven in Enter",
+          description: "Use the secure contact form to contact Tofleven in Enter for an introductory conversation about your support needs.",
         },
-        eyebrow: "Contact",
-        title: "Get in touch",
-        lede:
-          "Fill in the form or send an email directly. I usually reply within two working days.",
-        emailLabel: "Email",
-        emailValue: "info@tofleven.nl",
-        locationLabel: "Practice",
-        locationValue: "Enter, the Netherlands",
-        placeholderNote:
-          "Contact details are placeholders. To be supplied by the client.",
+        eyebrow: "A first step",
+        title: "Contact Tofleven in Enter",
+        lede: "Use the form to request an introductory conversation. Please do not share detailed or sensitive health information yet; a response and suitable next step can be agreed afterwards.",
+        locationLabel: "Practice location",
         form: {
-          fields: {
-            name: "Name",
-            email: "Email address",
-            subject: "Subject",
-            message: "Your message",
-            messagePlaceholder: "Briefly tell me what you'd like help with...",
-          },
-          subjectOptions: [
-            "Individual therapy",
-            "Relationship therapy",
-            "Child & parent",
-            "Hold Me Tight training",
-          ],
+          fields: { name: "Name", email: "Email address", subject: "Subject", message: "Your message", messagePlaceholder: "Briefly explain what you would like to discuss" },
+          subjectOptions: ["Individual therapy", "Relationship therapy", "Child and parents/caregivers", "Hold Me Tight or Emotion Coaching"],
           consentLabel: "I agree to the privacy policy",
           submit: "Send",
-          states: {
-            submitting: "Sending...",
-            success: "Thank you for your message. I'll get back to you soon.",
-            error:
-              "Your message could not be sent. Please try again or email info@tofleven.nl.",
-          },
-          validation: {
-            required: "Please complete this field.",
-            invalidEmail: "Please enter a valid email address.",
-            consentRequired:
-              "Please agree to the privacy policy before sending your message.",
-          },
+          states: { submitting: "Sending...", success: "Thank you for your message. You will receive a response as soon as possible.", error: "Your message could not be sent. Please try again later." },
+          validation: { required: "Please complete this field.", invalidEmail: "Please enter a valid email address.", consentRequired: "Please agree to the privacy policy before sending your message." },
         },
-      },
-      privacy: {
-        seo: {
-          title: "Privacy policy | Tofleven",
-          description:
-            "Read how Tofleven handles the personal data you share through this website.",
-        },
-        title: "Privacy policy",
-        placeholderNote:
-          "Draft text. To be replaced with a legally reviewed privacy policy.",
-        sections: [
-          {
-            title: "Who we are",
-            body:
-              "Tofleven is the therapy practice of Gerita de Wilde, based in Enter, the Netherlands. This policy describes how we handle the data you share through this website.",
-          },
-          {
-            title: "What data we collect",
-            body:
-              "Through the contact form we collect your name, email address, chosen subject and message. We don't collect more than needed to respond to your question.",
-          },
-          {
-            title: "What we use this data for",
-            body:
-              "We use your data solely to get in touch with you about your request. Your data is never sold or shared with third parties for marketing purposes.",
-          },
-          {
-            title: "Your rights",
-            body:
-              "You always have the right to view, correct or delete your data. Contact us at info@tofleven.nl to do so.",
-          },
-        ],
       },
     },
   },
@@ -692,97 +427,38 @@ export const subjectOptions = {
   nl: content.nl.pages.contact.form.subjectOptions,
   en: content.en.pages.contact.form.subjectOptions,
 } as const satisfies Record<Locale, readonly string[]>;
-
 export const contactFormStates = {
   nl: content.nl.pages.contact.form.states,
   en: content.en.pages.contact.form.states,
-} as const satisfies Record<
-  Locale,
-  Record<Exclude<ContactFormState, "idle">, string>
->;
+} as const satisfies Record<Locale, Record<Exclude<ContactFormState, "idle">, string>>;
 
-export const seo = {
-  nl: {
-    home: content.nl.pages.home.seo,
-    about: content.nl.pages.about.seo,
-    accountability: content.nl.pages.accountability.seo,
-    contact: content.nl.pages.contact.seo,
-    privacy: content.nl.pages.privacy.seo,
-  },
-  en: {
-    home: content.en.pages.home.seo,
-    about: content.en.pages.about.seo,
-    accountability: content.en.pages.accountability.seo,
-    contact: content.en.pages.contact.seo,
-    privacy: content.en.pages.privacy.seo,
-  },
-} as const satisfies Record<Locale, Record<PageKey, SeoContent>>;
-
-export interface ParsedLocalizedPath {
-  locale: Locale;
-  page: PageKey;
-}
-
+export interface ParsedLocalizedPath { locale: Locale; page: PageKey }
 function normalizePath(path: string): string {
   const withoutQueryOrHash = path.split(/[?#]/, 1)[0] || "/";
-  const withLeadingSlash = withoutQueryOrHash.startsWith("/")
-    ? withoutQueryOrHash
-    : `/${withoutQueryOrHash}`;
-
-  return withLeadingSlash === "/"
-    ? withLeadingSlash
-    : withLeadingSlash.replace(/\/+$/, "");
+  const withLeadingSlash = withoutQueryOrHash.startsWith("/") ? withoutQueryOrHash : `/${withoutQueryOrHash}`;
+  return withLeadingSlash === "/" ? withLeadingSlash : withLeadingSlash.replace(/\/+$/, "");
 }
-
-export function getPath<L extends Locale, P extends PageKey>(
-  locale: L,
-  page: P,
-): (typeof routes)[P][L] {
+export function getPath<L extends Locale, P extends PageKey>(locale: L, page: P): (typeof routes)[P][L] {
   return routes[page][locale];
 }
-
-export function parseLocalizedPath(
-  path: string,
-): ParsedLocalizedPath | null {
+export function parseLocalizedPath(path: string): ParsedLocalizedPath | null {
   const normalized = normalizePath(path);
-
   for (const page of PAGE_KEYS) {
     for (const locale of LOCALES) {
-      if (normalizePath(routes[page][locale]) === normalized) {
-        return { locale, page };
-      }
+      if (normalizePath(routes[page][locale]) === normalized) return { locale, page };
     }
   }
-
   return null;
 }
-
-export function getLocalePath(
-  path: string,
-  targetLocale: Locale,
-): LocalizedPath | null {
+export function getLocalePath(path: string, targetLocale: Locale): LocalizedPath | null {
   const parsed = parseLocalizedPath(path);
   return parsed ? routes[parsed.page][targetLocale] : null;
 }
-
-export function getAlternateLocale(locale: Locale): Locale {
-  return locale === "nl" ? "en" : "nl";
-}
-
+export function getAlternateLocale(locale: Locale): Locale { return locale === "nl" ? "en" : "nl" }
 export function getAlternateLocalePath(path: string): LocalizedPath | null {
   const parsed = parseLocalizedPath(path);
-  return parsed
-    ? routes[parsed.page][getAlternateLocale(parsed.locale)]
-    : null;
+  return parsed ? routes[parsed.page][getAlternateLocale(parsed.locale)] : null;
 }
-
-export function getPageContent<P extends PageKey>(
-  locale: Locale,
-  page: P,
-): PageContentMap[P] {
+export function getPageContent<P extends PageKey>(locale: Locale, page: P): PageContentMap[P] {
   return content[locale].pages[page];
-}
-
-export function getSeo(locale: Locale, page: PageKey): SeoContent {
-  return seo[locale][page];
 }

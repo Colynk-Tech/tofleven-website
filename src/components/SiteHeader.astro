@@ -9,13 +9,13 @@ import {
 
 interface Props {
 	locale: Locale;
-	page: PageKey;
+	page?: PageKey;
 }
 
 const { locale, page } = Astro.props;
 const shared = content[locale].shared;
-const nlPath = getPath("nl", page);
-const enPath = getPath("en", page);
+const nlPath = page ? getPath("nl", page) : getPath("nl", "home");
+const enPath = page ? getPath("en", page) : getPath("en", "home");
 ---
 
 <header class="site-header">

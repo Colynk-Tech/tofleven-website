@@ -1,11 +1,12 @@
 ---
 import PageView from "../../components/PageView.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getPageMetadata } from "../../lib/seo";
 
 export const prerender = false;
 Astro.response.headers.set("Cache-Control", "no-store");
 ---
 
-<BaseLayout locale="en" page="contact">
+<BaseLayout locale="en" page="contact" metadata={getPageMetadata("en", "contact")}>
 	<PageView locale="en" page="contact" />
 </BaseLayout>

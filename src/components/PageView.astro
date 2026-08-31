@@ -1,4 +1,6 @@
 ---
+import { Picture } from "astro:assets";
+import portraitImage from "../assets/images/gerita-de-wilde.jpg";
 import ButtonLink from "./ButtonLink.astro";
 import ContactForm from "./ContactForm.astro";
 import InfoCard from "./InfoCard.astro";
@@ -9,6 +11,11 @@ import {
 	type Locale,
 	type PageKey,
 } from "../lib/content";
+import {
+	businessFacts,
+	getVerifiedFact,
+	type BusinessFact,
+} from "../lib/business";
 
 interface Props {
 	locale: Locale;
@@ -24,8 +31,10 @@ const accountability =
 		: undefined;
 const contact =
 	page === "contact" ? getPageContent(locale, "contact") : undefined;
-const privacy =
-	page === "privacy" ? getPageContent(locale, "privacy") : undefined;
+const showTrainingHistory =
+	getVerifiedFact(
+		businessFacts.trainingHistoryApproval as BusinessFact<boolean>,
+	) === true;
 ---
 
 {home && (
@@ -94,24 +103,41 @@ const privacy =
 
 {about && (
 	<section class="shell split-page" aria-labelledby="about-title">
-		<div class="split-page__media">
-			<div
-				class="portrait-placeholder"
-				role="img"
-				aria-label={about.photoCaption}
-			></div>
-			<p class="placeholder-caption">{about.photoCaption}</p>
-		</div>
+		<figure class="split-page__media">
+			<Picture
+				class="portrait-photo"
+				src={portraitImage}
+				alt={about.photoCaption}
+				width="912"
+				height="1872"
+				widths={[360, 520, 760, 912]}
+				sizes="(max-width: 62rem) calc(100vw - 2.5rem), 38vw"
+				formats={["avif", "webp"]}
+				loading="eager"
+				decoding="async"
+			/>
+			<figcaption class="photo-caption">{about.photoCaption}</figcaption>
+		</figure>
 
 		<div class="profile-copy">
 			<span class="badge badge--sage">{about.eyebrow}</span>
 			<h1 id="about-title">{about.name}</h1>
-			<p class="profile-copy__lead">{about.paragraphs[0]}</p>
-			<p>{about.paragraphs[1]}</p>
-			<p>{about.paragraphs[2]}</p>
-			<ul class="credentials">
-				{about.credentials.map((credential) => <li>{credential}</li>)}
-			</ul>
+			{about.paragraphs.map((paragraph, index) => (
+				<p class:list={{ "profile-copy__lead": index === 0 }}>{paragraph}</p>
+			))}
+			{showTrainingHistory && (
+				<section class="training-history" aria-labelledby={`training-title-${locale}`}>
+					<h2 id={`training-title-${locale}`}>{about.trainingTitle}</h2>
+					<ol>
+						{about.trainingHistory.map((item) => (
+							<li>
+								<time>{item.period}</time>
+								<span>{item.label}</span>
+							</li>
+						))}
+					</ol>
+				</section>
+			)}
 			<div class="page-actions">
 				<ButtonLink href={getPath(locale, "contact")}>
 					{about.ctaPrimary}
@@ -161,33 +187,15 @@ const privacy =
 			<div>
 				<dl class="contact-details">
 					<div>
-						<dt>{contact.emailLabel}</dt>
-						<dd><a href={`mailto:${contact.emailValue}`}>{contact.emailValue}</a></dd>
-					</div>
-					<div>
 						<dt>{contact.locationLabel}</dt>
-						<dd>{contact.locationValue}</dd>
+						<dd>
+							{businessFacts.locality.value.city}, {businessFacts.locality.value.countryName[locale]}
+						</dd>
 					</div>
 				</dl>
-				<p class="placeholder-caption">{contact.placeholderNote}</p>
 			</div>
 		</div>
 
 		<ContactForm locale={locale} content={contact.form} />
 	</section>
-)}
-
-{privacy && (
-	<article class="reading-shell privacy-page" aria-labelledby="privacy-title">
-		<header>
-			<h1 id="privacy-title">{privacy.title}</h1>
-			<p class="draft-note">{privacy.placeholderNote}</p>
-		</header>
-		{privacy.sections.map((section) => (
-			<section class="privacy-section">
-				<h2>{section.title}</h2>
-				<p>{section.body}</p>
-			</section>
-		))}
-	</article>
 )}

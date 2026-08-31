@@ -624,39 +624,77 @@ summary {
 	padding-block: var(--section-block);
 }
 
-.portrait-placeholder {
-	position: relative;
+.split-page__media {
+	margin: 0;
+}
+
+.portrait-photo,
+.portrait-photo img {
+	display: block;
+	width: 100%;
+	height: auto;
 	overflow: hidden;
 	aspect-ratio: 4 / 5;
 	border: 1px solid color-mix(in srgb, var(--border-subtle) 62%, transparent);
 	border-radius: var(--radius-lg);
 	background: var(--bg-section-warm);
-	box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.2);
+	object-fit: cover;
+	object-position: center 38%;
 }
 
-.portrait-placeholder::after {
-	position: absolute;
-	inset: auto var(--space-5) var(--space-5);
+.portrait-photo {
+	overflow: hidden;
+	border-radius: var(--radius-lg);
+}
+
+.training-history,
+.registration-status {
+	display: grid;
+	gap: var(--space-3);
+	margin-top: var(--space-3);
+}
+
+.training-history h2,
+.registration-status h2 {
+	margin: 0;
+	font-size: var(--text-display-sm);
+}
+
+.owner-review-note,
+.registration-status p {
+	color: var(--text-muted);
+	font-size: var(--text-body-sm);
+}
+
+.training-history ol {
+	display: grid;
+	gap: var(--space-3);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.training-history li {
+	display: grid;
+	grid-template-columns: minmax(5.5rem, auto) 1fr;
+	gap: var(--space-4);
+	padding-bottom: var(--space-3);
+	border-bottom: 1px solid var(--border-subtle);
+}
+
+.training-history time {
 	color: var(--text-heading);
-	content: "Portretfoto";
-	font-family: var(--font-display);
-	font-size: 1.25rem;
-	font-variation-settings: var(--font-display-settings);
-	font-weight: 600;
-	opacity: 0.65;
-	text-align: center;
+	font-weight: 700;
 }
 
-.placeholder-caption,
-.draft-note,
+.photo-caption,
 .field-help {
 	color: var(--text-muted);
 	font-size: var(--text-caption);
 	line-height: 1.5;
 }
 
-.placeholder-caption,
-.draft-note {
+.photo-caption {
 	margin-top: var(--space-2);
 	font-style: italic;
 }
@@ -668,8 +706,7 @@ summary {
 }
 
 .profile-copy h1,
-.approach-page h1,
-.privacy-page h1 {
+.approach-page h1 {
 	margin: 0;
 	font-size: var(--text-display-lg);
 }
@@ -772,6 +809,26 @@ summary {
 
 .contact-details a:hover {
 	color: var(--brand-primary-hover);
+}
+
+.emergency-notice {
+	display: grid;
+	gap: var(--space-2);
+	margin-bottom: var(--space-5);
+	padding: var(--space-4);
+	border: 1px solid var(--border-strong);
+	border-radius: var(--radius-md);
+	background: var(--bg-section-warm);
+}
+
+.emergency-notice h2 {
+	margin: 0;
+	font-family: var(--font-body);
+	font-size: var(--text-body-lg);
+}
+
+.emergency-notice p {
+	font-size: var(--text-body-sm);
 }
 
 .form-card {
@@ -921,25 +978,36 @@ select.form-control {
 	white-space: nowrap;
 }
 
-.privacy-page {
-	display: grid;
-	gap: var(--space-5);
-	padding-block: var(--section-block);
-}
-
-.privacy-section {
-	display: grid;
-	gap: var(--space-2);
-}
-
-.privacy-section h2 {
-	margin: 0;
-	font-size: var(--text-display-sm);
-}
-
 .site-footer {
 	background: var(--bg-brand);
 	color: var(--text-on-brand);
+}
+
+.content-review {
+	padding-block: var(--space-5);
+}
+
+.content-review dl {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-3) var(--space-6);
+	margin: 0;
+	padding-top: var(--space-4);
+	border-top: 1px solid var(--border-subtle);
+	font-size: var(--text-caption);
+}
+
+.content-review dl > div {
+	display: flex;
+	gap: var(--space-2);
+}
+
+.content-review dt {
+	font-weight: 700;
+}
+
+.content-review dd {
+	margin: 0;
 }
 
 .footer-inner {
@@ -1011,6 +1079,13 @@ select.form-control {
 .footer-bottom a {
 	color: var(--color-white);
 	font-weight: 650;
+}
+
+.footer-legal-links {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	gap: var(--space-2) var(--space-5);
 }
 
 .not-found {
@@ -1224,6 +1299,10 @@ select.form-control {
 	.footer-bottom {
 		align-items: flex-start;
 		flex-direction: column;
+	}
+
+	.footer-legal-links {
+		justify-content: flex-start;
 	}
 
 	.form-card {

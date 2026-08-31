@@ -1,0 +1,26 @@
+---
+import { getVerifiedContentReview } from "../lib/business";
+import { content, type Locale, type PageKey } from "../lib/content";
+
+interface Props {
+	locale: Locale;
+	page: PageKey;
+}
+
+const { locale, page } = Astro.props;
+const review = getVerifiedContentReview(locale, page);
+const labels = content[locale].shared.reviewLabels;
+---
+
+{review && (
+	<aside class="content-review shell" aria-label={labels.lastReviewed}>
+		<dl>
+			<div><dt>{labels.owner}</dt><dd>{review.owner}</dd></div>
+			<div><dt>{labels.reviewer}</dt><dd>{review.reviewer}</dd></div>
+			<div>
+				<dt>{labels.lastReviewed}</dt>
+				<dd><time datetime={review.lastReviewed}>{review.lastReviewed}</time></dd>
+			</div>
+		</dl>
+	</aside>
+)}

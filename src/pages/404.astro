@@ -1,15 +1,10 @@
 ---
 import ButtonLink from "../components/ButtonLink.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getNotFoundMetadata } from "../lib/seo";
 ---
 
-<BaseLayout
-	locale="nl"
-	page="home"
-	titleOverride="Pagina niet gevonden | Tofleven"
-	descriptionOverride="De gevraagde pagina kon niet worden gevonden."
-	noindex
->
+<BaseLayout locale="nl" metadata={getNotFoundMetadata("nl")}>
 	<section class="shell not-found">
 		<h1>Deze pagina is niet gevonden</h1>
 		<p>De link is mogelijk verouderd of het adres is niet juist ingevoerd.</p>

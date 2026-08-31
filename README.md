@@ -22,8 +22,14 @@ Open `http://localhost:4321`.
 ```sh
 npm run check
 npm run build
+npm run build:launch
 npm start
 ```
+
+`build:launch` is intentionally stricter than the normal development build. It
+fails while required business facts, active registrations, trust copy, content
+reviewers, review dates, or fluent-English approval remain unverified in
+`src/lib/business.ts`.
 
 `npm start` serves the production build from `dist/server/entry.mjs`.
 
@@ -55,9 +61,11 @@ Actions tab.
 | `/over-mij` | `/en/about` |
 | `/verantwoording` | `/en/approach` |
 | `/contact` | `/en/contact` |
-| `/privacy` | `/en/privacy` |
-
 The sitemap is available at `/sitemap.xml`.
+
+Canonical content URLs use a trailing slash. Astro enforces this for on-demand
+routes; the deployment platform must enforce the same convention for
+prerendered files without creating a redirect chain.
 
 ## Contact delivery
 
@@ -80,6 +88,8 @@ want a demonstration form that does not deliver messages.
 ## Where to edit
 
 - Copy and SEO: `src/lib/content.ts`
+- Verified business facts and review status: `src/lib/business.ts`
+- Metadata and JSON-LD: `src/lib/seo.ts`
 - Design tokens and responsive styles: `src/styles/global.css`
 - Shared layout: `src/layouts/BaseLayout.astro`
 - Contact delivery: `src/actions/index.ts`
@@ -87,6 +97,14 @@ want a demonstration form that does not deliver messages.
 
 ## Before launch
 
-Replace or confirm the placeholder practice details, approved privacy copy,
-final logo, and photography. Configure and test the production webhook before
-publishing the contact form.
+Complete every item in `SEO-LAUNCH-CHECKLIST.md` and confirm that
+`npm run build:launch` passes. The Cloudflare-compatible `public/_headers` file
+contains the proposed response policies. A Node deployment must apply the same
+headers at its reverse proxy or hosting layer and should enable HSTS only after
+valid HTTPS works on both apex and `www`.
+
+Both normal variable fonts remain preloaded: the built WOFF2 files are about
+186 KB (Fraunces) and 73 KB (Source Sans 3). They are used above the fold, but
+the combined transfer is material. Keep the preloads until post-deployment
+Lighthouse and real-user Core Web Vitals data can test whether subsetting or
+removing one preload improves LCP without causing visible font swaps.

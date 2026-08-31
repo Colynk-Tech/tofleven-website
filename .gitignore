@@ -5,6 +5,9 @@ dist/
 # local Cloudflare state
 .wrangler/
 
+# local SEO audit cache
+.seo-cache/
+
 # dependencies
 node_modules/
 
