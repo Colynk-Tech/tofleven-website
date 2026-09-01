@@ -125,6 +125,11 @@ const showTrainingHistory =
 			{about.paragraphs.map((paragraph, index) => (
 				<p class:list={{ "profile-copy__lead": index === 0 }}>{paragraph}</p>
 			))}
+			<ul>
+				{about.qualifications.filter(Boolean).map((qualification) => (
+					<li>{qualification}</li>
+				))}
+			</ul>
 			{showTrainingHistory && (
 				<section class="training-history" aria-labelledby={`training-title-${locale}`}>
 					<h2 id={`training-title-${locale}`}>{about.trainingTitle}</h2>
@@ -187,10 +192,12 @@ const showTrainingHistory =
 			<div>
 				<dl class="contact-details">
 					<div>
+						<dt>{contact.emailLabel}</dt>
+						<dd><a href={`mailto:${contact.email}`}>{contact.email}</a></dd>
+					</div>
+					<div>
 						<dt>{contact.locationLabel}</dt>
-						<dd>
-							{businessFacts.locality.value.city}, {businessFacts.locality.value.countryName[locale]}
-						</dd>
+						<dd>{contact.location}</dd>
 					</div>
 				</dl>
 			</div>

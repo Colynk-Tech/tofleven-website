@@ -13,7 +13,6 @@ interface Props {
 const { locale } = Astro.props;
 const shared = content[locale].shared;
 const footer = shared.footer;
-const home = content[locale].pages.home;
 const currentYear = new Date().getFullYear();
 ---
 
@@ -51,7 +50,7 @@ const currentYear = new Date().getFullYear();
 	<div class="shell footer-inner">
 		<div class="footer-brand">
 			<span class="footer-brand__name">Tofleven</span>
-			<p>{home.hero.title}</p>
+			<p>{footer.tagline}</p>
 		</div>
 
 		<nav class="footer-column" aria-labelledby={`footer-about-${locale}`}>
@@ -65,6 +64,7 @@ const currentYear = new Date().getFullYear();
 		<div class="footer-column" aria-labelledby={`footer-contact-${locale}`}>
 			<h2 id={`footer-contact-${locale}`}>{footer.col2Title}</h2>
 			<ul>
+				<li><a href={`mailto:${footer.email}`}>{footer.email}</a></li>
 				<li>{footer.locationLabel}</li>
 			</ul>
 		</div>

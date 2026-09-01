@@ -24,9 +24,11 @@ export interface NavContent {
   items: readonly [NavItem, NavItem, NavItem];
 }
 export interface FooterContent {
+  tagline: string;
   col1Title: string;
   col1Items: readonly [string, string];
   col2Title: string;
+  email: string;
   locationLabel: string;
   privacyLink: string;
   termsLink: string;
@@ -78,6 +80,7 @@ export interface AboutPageContent {
   name: string;
   photoCaption: string;
   paragraphs: readonly string[];
+  qualifications: readonly [string, string];
   trainingTitle: string;
   trainingIntro: string;
   trainingHistory: readonly TrainingHistoryItem[];
@@ -112,6 +115,9 @@ export interface ContactPageContent {
   title: string;
   lede: string;
   locationLabel: string;
+  location: string;
+  emailLabel: string;
+  email: string;
   form: ContactFormContent;
 }
 export interface PageContentMap {
@@ -167,16 +173,18 @@ export const content = {
         closeMenuLabel: "Menu sluiten",
         items: [
           { page: "about", label: "Over mij" },
-          { page: "accountability", label: "Werkwijze" },
+          { page: "accountability", label: "Visie" },
           { page: "contact", label: "Contact" },
         ],
       },
       footer: {
+        tagline: "Inzichtgevende, ervaringsgerichte therapie, herstel van binnenuit",
         col1Title: "Tofleven",
-        col1Items: ["Over Gérita de Wilde", "Werkwijze en visie"],
-        col2Title: "Locatie",
+        col1Items: ["Over mij", "Visie"],
+        col2Title: "Contact",
+        email: "info@tofleven.nl",
         locationLabel: "Enter, Nederland",
-        privacyLink: "Privacyverklaring",
+        privacyLink: "Privacy policy",
         termsLink: "Algemene voorwaarden",
         disclaimerLink: "Disclaimer & copyright",
         opensNewTabLabel: "opent in een nieuw tabblad",
@@ -186,52 +194,52 @@ export const content = {
     pages: {
       home: {
         seo: {
-          title: "Integratief therapeut in Enter | Tofleven",
-          description: "Tofleven biedt integratieve, ervaringsgerichte begeleiding in Enter voor kinderen, jongeren, volwassenen, ouders en stellen.",
+          title: "Tofleven - maatwerk, uniek en persoonlijk",
+          description: "Verbindende en emotie gerichte therapie, persoonlijk en relationeel, voor kinderen en volwassenen met uiteenlopende hulpvragen.",
         },
         hero: {
-          eyebrow: "Inzichtgevende, ervaringsgerichte therapie — herstel van binnenuit",
-          title: "Integratieve therapie in Enter",
-          intro: "Tofleven biedt persoonlijke en relationele begeleiding aan kinderen, jongeren, volwassenen, ouders en stellen. In een eerste kennismaking kun je onderzoeken of de werkwijze en het contact bij je passen.",
-          ctaPrimary: "Vraag een kennismaking aan",
-          ctaSecondary: "Bekijk de werkwijze",
+          eyebrow: "Integratief therapeut in Enter",
+          title: "Inzichtgevende, ervaringsgerichte therapie, herstel van binnenuit",
+          intro: "Het wonderlijke van ons denken, voelen, willen en het telkens weer keuzes maken is voortdurend in proces en in beweging. Dat maakt het mogelijk om nieuwe keuzes te maken en nieuwe kansen te benutten",
+          ctaPrimary: "Maak kennis",
+          ctaSecondary: "Lees over mijn werkwijze",
         },
         method: {
           eyebrow: "Therapeutische begeleiding",
-          title: "Aandacht voor wat er onder de oppervlakte speelt",
-          lede: "De begeleiding verbindt inzichten uit verschillende psychologische stromingen met aandacht voor denken, voelen, willen en kiezen. Er is geen vast recept: de hulpvraag en jouw eigen tempo vormen het vertrekpunt.",
+          title: "Integratieve therapie; benadering vanuit verschillende psychologische stromingen",
+          lede: "Geen quick fix, maar aandacht voor wat er onder oppervlakte speelt, met respect en aandacht voor echt herstel",
           cards: [
-            { eyebrow: "Emoties", title: "Emoties herkennen", body: "Je kunt leren voelen en begrijpen wat er in je omgaat. Emotionally Focused Therapy (EFT) is een van de benaderingen die daarbij wordt gebruikt." },
-            { eyebrow: "Verbinding", title: "Relatietherapie", body: "Voor stellen die patronen tussen hen willen onderzoeken en opnieuw contact met elkaar willen zoeken, ook na een periode van afstand." },
-            { eyebrow: "Identiteit", title: "Ruimte voor wie je bent", body: "Een plek om te onderzoeken wat bij je past, welke aanpassingspatronen je kent en welke keuzes je zelf wilt maken." },
+            { eyebrow: "Emoties", title: "Herken je emoties", body: "Leren voelen én begrijpen wat er in je omgaat, met Emotionally Focused Therapy (EFT) als basis" },
+            { eyebrow: "Verbinding", title: "Relatietherapie", body: "Voor stellen die meer naar elkaar toe willen groeien, ook na een periode van afstand" },
+            { eyebrow: "Identiteit", title: "Wie je in de kern bent", body: "Ruimte om jezelf te ontdekken, voorbij aanpassing en overleven, vanuit je eigen authenticiteit." },
           ],
         },
         forWhom: {
-          eyebrow: "Verschillende hulpvragen",
+          eyebrow: "Verschillende mogelijkheden voor jouw hulpvraag",
           title: "Therapie en trainingen",
-          lede: "De huidige begeleiding richt zich op kinderen en ouders, jongeren, volwassenen en stellen. Genoemde thema’s zijn onder meer zingeving, angst, onzekerheid, emotieregulatie, identiteit, somberheid en hoogbegaafdheid. Bespreek in een kennismaking of jouw vraag binnen de expertise en het aanbod past.",
+          lede: "Voor kinderen en ouders, jongeren en volwassen voor bv. zingeving, angsten, onzekerheid, falen, emotie-regulatie, hoogbegaafdheid, identiteit, depressie. Relatietherapie voor stellen. In company groepstrainingen mogelijkheden voor bedrijven, gemeentes of kerken op aanvraag.",
           trainings: [
-            { eyebrow: "Relatietraining", title: "Houd Me Vast", body: "Een praktische training rond terugkerende patronen tussen partners, emotionele verbinding, liefde en vergeving." },
-            { eyebrow: "Training voor opvoeders", title: "Emoties coachen", body: "Een training over een emotioneel begeleidende houding naar kinderen, gebaseerd op de methode van John Gottman." },
+            { eyebrow: "Relatie training", title: "Houd Me Vast", body: "Een praktische training van 8 avonden over wat er mis kan gaan tussen partners en hoe je elkaar emotioneel weer kan vinden. Over verbinding, liefde en vergeving" },
+            { eyebrow: "Training voor opvoeders", title: "Emoties coachen", body: "Leer in 4 dagdelen een emotioneel begeleidende houding naar kinderen voor meer bewust en plezierig opvoeden (J. Gottman methode)" },
           ],
         },
-        band: { title: "Waarom doe ik wat ik doe?", body: "Samen onderzoeken wat kan bijdragen aan groei en een tof leven.", cta: "Lees over mijn werkwijze en visie" },
+        band: { title: "Waarom doe ik wat ik doe....", body: "Samen zoeken naar groei en verbeteringen voor een tof leven", cta: "Lees over mijn werkwijze" },
       },
       about: {
         seo: {
-          title: "Gérita de Wilde – integratief therapeut | Tofleven",
-          description: "Maak kennis met Gérita de Wilde, integratief therapeut bij Tofleven in Enter, en lees over haar visie, ervaring en opleidingstraject.",
+          title: "Over mij Tofleven",
+          description: "Maak kennis met Gérita de Wilde, Therapeut, Integratief(o.a.EFT) en Jeugd en Gezin(SKJ) in Enter.",
         },
-        eyebrow: "Een persoonlijke ontdekkingsreis",
-        name: "Gérita de Wilde – integratief therapeut",
+        eyebrow: "Over mij",
+        name: "Ontdekkingsreis",
         photoCaption: "Portret van Gérita de Wilde.",
         paragraphs: [
-          "Ik ben Gérita de Wilde en begeleid vanuit Tofleven in Enter kinderen en ouders, jongeren, volwassenen en stellen. In een kennismaking onderzoeken we samen of mijn manier van werken aansluit bij jou en je hulpvraag.",
-          "Mijn eigen leven ervaar ik als een ontdekkingsreis: van mezelf kwijtraken naar mezelf terugvinden, ervaringen verwerken en talenten ontwikkelen. Mijn christelijke geloof is daarin belangrijk. Voor mij is God liefdevol en goed, en heeft ieder mens een unieke waarde.",
-          "Aandacht, acceptatie, respect, een luisterend oor, tijd en begrip kunnen ruimte geven om verder te groeien. Mijn huwelijk en gezin, missiereizen, het leiden van een geloofsgemeenschap en de ontmoetingen met uiteenlopende mensen hebben mijn blik mede gevormd.",
-          "In mijn werk begeleid ik kinderen en hun ouders, jongeren, volwassenen en koppels. Ik kijk naar de samenhang tussen geest, ziel en lichaam en werk vanuit vertrouwen, zonder vooraf een uitkomst te beloven.",
-          "Neem gerust contact op voor een eerste kennismaking. Daarna beslis je zelf of het contact en de werkwijze bij je passen.",
+          "Mijn leven wil ik, Gérita, omschrijven als een ontdekkingsreis. Van mezelf kwijtgeraakt zijn naar terugvinden. Van ervaringen verwerken en herstellen naar talenten ontwikkelen. Meer en meer mezelf zijn. Daarin kan ik niet anders dan erkennen dat er een grote Createur is. Voor mij is dat God, liefdevol en goed. In onze kern zit onze een unieke waarde. De interesse voor wie iemand is, voor wat iemand werkelijk beleefd en meemaakt blijft voor mij doorgaan",
+          "Ervaringen en ontwikkelingen in het leven hebben mij geleerd dat de lijn van de liefde een tof leven geeft. De liefdevolle impact van aandacht, acceptatie en respect, luisterend oor, tijd en begrip helpen verder groeien in het leven. De activiteiten aan opleiding en trainingen, huwelijk en gezin, missiereizen en leiden van een geloofsgemeenschap, het opvangen en ontmoeten van mensen, zijn allemaal avonturen die hieruit voortvloeien. In mijn praktijk aan huis begeleid ik sinds 1996 kinderen en hun ouders, jongeren, volwassenen en koppels. Ik geloof dat we pas echt tot bloei komen als onze geest en ziel en lichaam met elkaar in verbinding zijn",
+          "Door samen de hand te reiken aan situaties die als vastzittende knopen ervaren worden, start de zoektocht naar herstel. Mijn therapeutische ondersteuning bij deze zoektocht en het doorwerken van ervaringen wil ik bieden via de brug van vertrouwen. En door interventies vanuit mijn expertise. O.a. 1986 Verpleegkundige (BIG), 1997-2008 Focussen, psychoanalytisch, pastoraal en clientgerichte integratief therapeut, 2008 ontwikkelingspsychologie, 2012 Emotional Focused Therapy en Houd me Vast training, 2013 Children focusing training, 2018 dynamiek op tafel, 2023 Emotional Focused Individual Therapy, 2024 Kindertekeningen begrijpen, 2026 Jeugd en Gezin (SKJ).",
+          "Neem gerust contact op voor een eerste kennismaking om vervolgens te beslissen of de manier van aanpak bij je past",
         ],
+        qualifications: ["EFT therapeut", "Jeugd en Gezinsprofessional SKJ geregistreerd"],
         trainingTitle: "Opleidingen en trainingen",
         trainingIntro: "Onderstaande tijdlijn is gebaseerd op de door de eigenaar aangeleverde geschiedenis. Titels, opleiders, jaartallen en actuele geldigheid moeten vóór publicatie worden gecontroleerd.",
         trainingHistory: [
@@ -247,41 +255,44 @@ export const content = {
         ],
         registrationTitle: "Actieve registraties",
         registrationPending: "Actieve registraties, nummers en verificatielinks worden pas gepubliceerd nadat de eigenaar deze heeft bevestigd.",
-        ctaPrimary: "Vraag een kennismaking aan",
+        ctaPrimary: "Neem contact op",
         ctaSecondary: "Lees over mijn werkwijze",
       },
       accountability: {
         seo: {
           title: "Werkwijze: integratieve therapie en EFT | Tofleven",
-          description: "Lees hoe Tofleven in Enter integratief en ervaringsgericht werkt, met aandacht voor emoties, relaties en de mens als geheel.",
+          description: "Lees meer over mijn benadering en wat je kunt verwachten",
         },
-        eyebrow: "Visie en werkwijze",
-        title: "Werkwijze: integratieve therapie en EFT",
+        eyebrow: "Visie",
+        title: "Ieder mens is de moeite waard om een leven te leven in overeenstemming met zichzelf en anderen",
         intro: [
-          "We beginnen bij jouw hulpvraag en onderzoeken wat aandacht nodig heeft. Er is ruimte voor wat zich aandient, met respect, zonder waardeoordeel en in een tempo dat bij jou past.",
-          "Samen kun je patronen en oorzaken onderzoeken en ontdekken welke andere keuzes mogelijk zijn. Jij houdt de regie en bepaalt steeds of de aanpak bij je past.",
+          "Vanaf binnenkomst, afhankelijk van de hulpvraag, ontdekken we wat nodig is. Daar wordt ruimte aan gegeven. Aan de slag gaan betekent vertrouwen dat zich aandient wat aan de orde mag komen, aandacht nodig heeft en alles doet ertoe. Met respect en zonder waarde oordeel aanwezig zijn en toelaten wat opkomt",
+          "Samen gaan we ontdekken waar knopen vast zitten, wat niet lekker gaat. Oorzaken ontdekken en ruimte in jezelf maken om anders te gaan functioneren, eerlijk en oprecht",
         ],
         pillars: [
-          { eyebrow: "Mensbeeld", title: "Geest, ziel en lichaam", body: "Een hulpvraag staat niet los van wie je bent. Daarom kijken we naar de mens als geheel en niet alleen naar losse klachten." },
-          { eyebrow: "Methode", title: "Ervaringsgericht werken", body: "Door aandacht te geven aan wat er in je gebeurt, kun je emoties en reactiepatronen beter leren herkennen en begrijpen." },
-          { eyebrow: "Eigen keuze", title: "Ontdekken, leren en groeien", body: "Je onderzoekt wat voor jou van waarde is en welke stap je wilt zetten. De begeleiding ondersteunt dat proces, zonder een resultaat te garanderen." },
+          { eyebrow: "Mensbeeld", title: "Geest, ziel en lichaam", body: "Klachten staan niet los van wie je bent. Kijk naar het geheel, niet alleen naar de symptomen" },
+          { eyebrow: "Methode", title: "Ervaringsgericht werken", body: "Door aandacht te schenken aan wat er in je gebeurt, leer je herkennen en begrijpen wat iets met je doet, en kun je eerlijker reageren" },
+          { eyebrow: "Voor wie?", title: "Voor iedereen die wil ontdekken, leren en groeien", body: "Je echte zelf is de moeite waard om te ontdekken. Loop je met je ziel onder je arm door welk issue dan ook, blijf er dan niet mee lopen. Trek aan de bel." },
         ],
-        reassurance: { title: "Wat kun je verwachten?", body: "Een traject kan inzicht geven in oorzaken, emoties en patronen die niet meer helpen. Dat kan ruimte bieden om andere keuzes te oefenen. Wat passend en haalbaar is, verschilt per persoon en wordt samen besproken." },
-        cta: "Bespreek je hulpvraag",
+        reassurance: { title: "Wat mag je verwachten?", body: "Door liefdevolle verbinding met jezelf en anderen zal je leven eenvoudiger en mooier worden. Door inzichten in oorzaken en reaktiepatronen, die niet behulpzaam zijn, is het mogelijk te veranderen. Door precies te ervaren en door te begrijpen waar iets vandaan komt lukt het om te leren beseffen wat nodig is. Ons unieke zelf krijgt de ruimte, en dat is tof" },
+        cta: "Maak kennis",
       },
       contact: {
         seo: {
-          title: "Contact met Tofleven in Enter",
-          description: "Neem via het beveiligde contactformulier contact op met Tofleven in Enter voor een eerste kennismaking over je hulpvraag.",
+          title: "Contact Tofleven",
+          description: "Neem contact op met Tofleven in Enter, reaktie meestal binnen twee werkdagen",
         },
-        eyebrow: "Eerste stap",
-        title: "Contact met Tofleven in Enter",
-        lede: "Gebruik het formulier voor een eerste kennismaking. Deel nog geen uitgebreide of gevoelige gezondheidsinformatie; een reactie en vervolgstap worden daarna afgestemd.",
-        locationLabel: "Praktijklocatie",
+        eyebrow: "Contact",
+        title: "Neem contact op met Tofleven in Enter, reaktie meestal binnen twee werkdagen",
+        lede: "Vul het formulier in of stuur direct een mail. Reactie meestal binnen twee werkdagen",
+        locationLabel: "Praktijk Tofleven",
+        location: "Enter, Overijssel",
+        emailLabel: "E-mail",
+        email: "info@tofleven.nl",
         form: {
-          fields: { name: "Naam", email: "E-mailadres", subject: "Onderwerp", message: "Je bericht", messagePlaceholder: "Vertel kort waarover je contact wilt opnemen" },
-          subjectOptions: ["Individuele therapie", "Relatietherapie", "Kind en ouders/verzorgers", "Houd Me Vast of emotiecoaching"],
-          consentLabel: "Ik ga akkoord met de privacyverklaring",
+          fields: { name: "Naam", email: "E-mailadres", subject: "Onderwerp", message: "Je bericht", messagePlaceholder: "Vertel kort wat je hulpvraag is" },
+          subjectOptions: ["Individuele therpie", "Relatie therapie", "Kind & ouders/verzorgers", "Houd me Vast of Emotie coachen training"],
+          consentLabel: "Ik heb de privacyverklaring gelezen",
           submit: "Versturen",
           states: { submitting: "Bezig met versturen...", success: "Dank voor je bericht. Je ontvangt zo spoedig mogelijk een reactie.", error: "Het versturen is niet gelukt. Probeer het later opnieuw." },
           validation: { required: "Vul dit veld in.", invalidEmail: "Vul een geldig e-mailadres in.", consentRequired: "Ga akkoord met de privacyverklaring om je bericht te versturen." },
@@ -298,17 +309,19 @@ export const content = {
         menuLabel: "Open menu",
         closeMenuLabel: "Close menu",
         items: [
-          { page: "about", label: "About" },
-          { page: "accountability", label: "Approach" },
+          { page: "about", label: "About me" },
+          { page: "accountability", label: "Vision" },
           { page: "contact", label: "Contact" },
         ],
       },
       footer: {
+        tagline: "Insight-oriented, experiential therapy, recovery from within",
         col1Title: "Tofleven",
-        col1Items: ["About Gérita de Wilde", "Approach and vision"],
-        col2Title: "Location",
+        col1Items: ["About me", "Vision"],
+        col2Title: "contact",
+        email: "info@tofleven.nl",
         locationLabel: "Enter, the Netherlands",
-        privacyLink: "Privacy policy",
+        privacyLink: "Privacy statement",
         termsLink: "General terms and conditions",
         disclaimerLink: "Disclaimer & copyright",
         opensNewTabLabel: "opens in a new tab",
@@ -318,52 +331,52 @@ export const content = {
     pages: {
       home: {
         seo: {
-          title: "Integrative therapist in Enter | Tofleven",
-          description: "Tofleven offers integrative, experiential support in Enter for children, young people, adults, parents, and couples.",
+          title: "Tofleven - customization, unique and personal",
+          description: "Connecting and emotion focused therapy, personal en relational, for children and adults with various requests for help",
         },
         hero: {
-          eyebrow: "Insight-oriented, experiential therapy — recovery from within",
-          title: "Integrative therapy in Enter",
-          intro: "Tofleven offers individual and relationship-focused support for children, young people, adults, parents, and couples. An introductory conversation can help you decide whether the approach and personal fit feel right for you.",
-          ctaPrimary: "Request an introduction",
-          ctaSecondary: "Explore the approach",
+          eyebrow: "Integrative therapist in Enter",
+          title: "insight-oriented, experiential therapy, recovery from within",
+          intro: "The wondrous nature of our thinking, feeling, wanting and making choices time and time again is constantly in process and in motion. This enables us to make new choices and to seize new opportunities",
+          ctaPrimary: "Get acquainted",
+          ctaSecondary: "Read about my approach",
         },
         method: {
-          eyebrow: "Therapeutic support",
-          title: "Attention to what lies beneath the surface",
-          lede: "The approach brings together ideas from several psychological traditions while paying attention to thought, emotion, intention, and choice. There is no fixed formula: your question and pace are the starting point.",
+          eyebrow: "Therapeutic guidance",
+          title: "Integrative therapy; approach from different psychological perspectives",
+          lede: "No quick fix, but attention to what is happening beneath the surface, with respect, attention for real recovery",
           cards: [
-            { eyebrow: "Emotions", title: "Recognising emotions", body: "You can learn to notice and understand what is happening inside you. Emotionally Focused Therapy (EFT) is one approach used in this work." },
-            { eyebrow: "Connection", title: "Relationship therapy", body: "For couples who want to explore recurring patterns and seek renewed contact, including after a period of distance." },
-            { eyebrow: "Identity", title: "Space for who you are", body: "A place to explore what fits you, which patterns of adaptation you recognise, and which choices you want to make." },
+            { eyebrow: "Emotions", title: "Recognize your emoties", body: "To learn to feel and understand what's going on inside you, based on Emotionally Focused Therapy (EFT)" },
+            { eyebrow: "Connection", title: "Relationship therapy", body: "For couples who want to grow closer to each other also after a period of distance" },
+            { eyebrow: "Identity", title: "Who you are at your core", body: "Space to discover yourself, past adaptation and surviaval, from your own authenticity" },
           ],
         },
         forWhom: {
-          eyebrow: "Different support needs",
-          title: "Therapy and training",
-          lede: "Current support is intended for children and parents, young people, adults, and couples. Topics mentioned include meaning, anxiety, uncertainty, emotional regulation, identity, low mood, and giftedness. Use an introductory conversation to check whether your needs fit the practice's expertise and offer.",
+          eyebrow: "Various options for your request for help",
+          title: "Therapie and training",
+          lede: "For children and parents, (young)adults voor e.g. meaning, fears, uncertainty, failure, emotional regulation, depression, indentity, giftedness. Relationtherapy for couples. In company group training possibilities for municipalities or churches",
           trainings: [
-            { eyebrow: "Relationship training", title: "Hold Me Tight", body: "Practical training around recurring patterns between partners, emotional connection, love, and forgiveness." },
-            { eyebrow: "Training for caregivers", title: "Emotion Coaching", body: "Training in an emotion-guiding approach to children, based on John Gottman's method." },
+            { eyebrow: "Relationship training", title: "Hold Me Tight", body: "A practical course about what can go wrong between partners and how to rebuild your emotional connection. About connection, love and forgiveness" },
+            { eyebrow: "Training for educators", title: "Emotion Coaching", body: "Develop in 4 half days a emotional guiding attitude to children for raising more consciously and enjoyable (J.Gottman method)" },
           ],
         },
-        band: { title: "Why do I do this work?", body: "Exploring together what may support growth and a fulfilling life.", cta: "Read about my approach and vision" },
+        band: { title: "Why do I do what I do", body: "Seeking growth and improvements together for a great life", cta: "Read my approach" },
       },
       about: {
         seo: {
-          title: "Gérita de Wilde – integrative therapist | Tofleven",
-          description: "Meet Gérita de Wilde, integrative therapist at Tofleven in Enter, and read about her perspective, experience, and training history.",
+          title: "About me Tofleven",
+          description: "Get to know Gérita de Wilde, Therapist (e.g.EFT) and Youth and Family(SKJ) in Enter",
         },
-        eyebrow: "A personal journey of discovery",
-        name: "Gérita de Wilde – integrative therapist",
+        eyebrow: "about me",
+        name: "Voyage of discovery",
         photoCaption: "Portrait of Gérita de Wilde.",
         paragraphs: [
-          "I am Gérita de Wilde. Through Tofleven in Enter, I support children and parents, young people, adults, and couples. In an introductory conversation, we explore whether my way of working fits you and your question.",
-          "I experience my own life as a journey of discovery: losing and finding myself, processing experiences, and developing my abilities. My Christian faith is important to me. I believe God is loving and good, and that every person has unique worth.",
-          "Attention, acceptance, respect, a listening ear, time, and understanding can create room for growth. My marriage and family, mission trips, leadership of a faith community, and encounters with many different people have helped shape my perspective.",
-          "In my work, I support children and their parents, young people, adults, and couples. I consider the relationship between mind, soul, and body and work from trust, without promising a particular outcome.",
-          "You are welcome to request an introductory conversation. You can then decide for yourself whether the connection and approach feel right.",
+          "This is how I, Gérita, would like to describe my life. From having lost myself to finding myself again. From processing experiences and recovering to developing talents. Being more and more myself. in that, I cannot help but acknowledge that there is a great Creator. For me, that's God, loving and good. Our unique value lies at our core. The interest in who someone is, for what someone actually experiences continues for me.",
+          "Experiences and developments in life have taught me that the line of love gives a great life. The loving impact of attention, acceptation and respect, a listening ear, time and understanding help to grow further in life. The education and training activities, my marriage and family, mission trips, leading church, connections with all kinds op people are all adventures that stem from this. In my practice at home everybody is welcome. I believe that we can truly flourish when our mind, soul, and body are connected with each other",
+          "By joining hands to untangle situations that feel like tied-up knots, begins the search for recovery. I want to offer my therapeutic support during this search and the processing of experiences via the bridge of trust. And through interventions based on my expertise. O.a. 1986 verpleegkundige (BIG), 1997-2008 Focusing and psychoanalytic, pastoral, cliënt centered integrative therapist, 2008 developmental psychologie, 2012 Emotional Focused therapy and Hold me Tight training, 2013 Children focusing, 2018 Working with images, 2023 Emotional focused Individual Therapy, 2024 Understanding children's drawings, 2026 Jeugd en Gezin (SKJ)",
+          "Feel free to contact for an introductory meeting and then dicide whether the approach suits you",
         ],
+        qualifications: ["EFT therapist", ""],
         trainingTitle: "Education and training",
         trainingIntro: "This timeline is based on the history supplied by the owner. Titles, providers, dates, and current validity must be checked before publication.",
         trainingHistory: [
@@ -379,41 +392,44 @@ export const content = {
         ],
         registrationTitle: "Active registrations",
         registrationPending: "Active registrations, identifiers, and verification links will only be published after owner confirmation.",
-        ctaPrimary: "Request an introduction",
+        ctaPrimary: "Get in touch",
         ctaSecondary: "Read about my approach",
       },
       accountability: {
         seo: {
           title: "Approach: integrative therapy and EFT | Tofleven",
-          description: "Learn how Tofleven in Enter works integratively and experientially, with attention to emotions, relationships, and the whole person.",
+          description: "Read more about my approach and what you can expect",
         },
-        eyebrow: "Vision and approach",
-        title: "Approach: integrative therapy and EFT",
+        eyebrow: "Vision",
+        title: "Every human being is worthwile to live a life in accordance with oneself and others",
         intro: [
-          "We begin with your question and explore what needs attention. There is room for what emerges, with respect, without judgement, and at a pace that suits you.",
-          "Together, you may explore patterns and underlying causes and consider which different choices are possible. You remain in control and decide whether the approach continues to fit.",
+          "From entry by Tofleven, depending on the request for help, we discover what is needed. Space is given to that. Getting to work means trusting that whatever may be adressed will present itself, needs attention and everything matters. With respect and without value judgement being present and allow what arises",
+          "Together we will discover where the knots are stuck, what isn't going well. Uncovering the root causes and creating space within yourself to function differently, honest en sincere",
         ],
         pillars: [
-          { eyebrow: "View of the person", title: "Mind, soul, and body", body: "A difficulty is not separate from who you are. The work therefore considers the whole person, rather than isolated symptoms alone." },
-          { eyebrow: "Method", title: "Experiential work", body: "By paying attention to what happens inside you, you can learn to recognise and understand emotions and response patterns more clearly." },
-          { eyebrow: "Your choice", title: "Discover, learn, and grow", body: "You explore what matters to you and which step you want to take. The support serves that process without guaranteeing an outcome." },
+          { eyebrow: "Image of humanit", title: "Mind, soul and body", body: "Struggles are nog seperate from who you are. Look at the whole, not only to the symptoms" },
+          { eyebrow: "Method", title: "Experience-oriented work", body: "By paying attention to what is happening inside you, you learn to recognize and understand something that affects you, and you can react more honestly" },
+          { eyebrow: "For whom?", title: "For everyone who wants to learn, discover and grow", body: "Your real self is worthy to discover. When you walk around with your heart in your hands, for whatever reason, don't keep walking with it. Ring the bell" },
         ],
-        reassurance: { title: "What can you expect?", body: "A process may offer insight into underlying causes, emotions, and patterns that are no longer helpful. This can create room to practise different choices. What is appropriate and achievable varies from person to person and is discussed together." },
-        cta: "Discuss your support needs",
+        reassurance: { title: "What can you expect?", body: "Through loving connection with yourself and others, your life will become simpler and more beautiful. Through insights in causes and reaction patterns, that are not helpful, is it possible to change. By experiencing precisely and by understanding where something comes from helps you realize what is needed. Our unique self is given space and that's awesome" },
+        cta: "Get to know",
       },
       contact: {
         seo: {
-          title: "Contact Tofleven in Enter",
-          description: "Use the secure contact form to contact Tofleven in Enter for an introductory conversation about your support needs.",
+          title: "Contact Tofleven",
+          description: "Get in touch with Tofleven in Enter, response usually within two working days",
         },
-        eyebrow: "A first step",
-        title: "Contact Tofleven in Enter",
-        lede: "Use the form to request an introductory conversation. Please do not share detailed or sensitive health information yet; a response and suitable next step can be agreed afterwards.",
-        locationLabel: "Practice location",
+        eyebrow: "Contact",
+        title: "Get in touch with Tofleven in Enter, response usually within two working days",
+        lede: "Fill the form or send an email direktly",
+        locationLabel: "Practice Tofleven",
+        location: "Enter, Overijssel",
+        emailLabel: "E-mail",
+        email: "info@tofleven.nl",
         form: {
-          fields: { name: "Name", email: "Email address", subject: "Subject", message: "Your message", messagePlaceholder: "Briefly explain what you would like to discuss" },
-          subjectOptions: ["Individual therapy", "Relationship therapy", "Child and parents/caregivers", "Hold Me Tight or Emotion Coaching"],
-          consentLabel: "I agree to the privacy policy",
+          fields: { name: "Name", email: "Email address", subject: "Subject", message: "Your message", messagePlaceholder: "Briefly explain what you need help with" },
+          subjectOptions: ["Individual therapy", "Relationship therapy", "child & parents/caregivers", "Hold me Tight or Emotion coachen training"],
+          consentLabel: "I have read the privacy policy",
           submit: "Send",
           states: { submitting: "Sending...", success: "Thank you for your message. You will receive a response as soon as possible.", error: "Your message could not be sent. Please try again later." },
           validation: { required: "Please complete this field.", invalidEmail: "Please enter a valid email address.", consentRequired: "Please agree to the privacy policy before sending your message." },
