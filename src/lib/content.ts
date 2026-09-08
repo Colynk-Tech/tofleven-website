@@ -220,7 +220,7 @@ export const content = {
           lede: "Voor kinderen en ouders, jongeren en volwassen voor bv. zingeving, angsten, onzekerheid, falen, emotie-regulatie, hoogbegaafdheid, identiteit, depressie. Relatietherapie voor stellen. In company groepstrainingen mogelijkheden voor bedrijven, gemeentes of kerken op aanvraag.",
           trainings: [
             { eyebrow: "Relatie training", title: "Houd Me Vast", body: "Een praktische training van 8 avonden over wat er mis kan gaan tussen partners en hoe je elkaar emotioneel weer kan vinden. Over verbinding, liefde en vergeving" },
-            { eyebrow: "Training voor opvoeders", title: "Emoties coachen", body: "Leer in 4 dagdelen een emotioneel begeleidende houding naar kinderen voor meer bewust en plezierig opvoeden (J. Gottman methode)" },
+            { eyebrow: "Training voor opvoeders", title: "Emotie coachen", body: "Leer in 4 dagdelen een emotioneel begeleidende houding naar kinderen voor meer bewust en plezierig opvoeden (J. Gottman methode)" },
           ],
         },
         band: { title: "Waarom doe ik wat ik doe....", body: "Samen zoeken naar groei en verbeteringen voor een tof leven", cta: "Lees over mijn werkwijze" },
@@ -274,16 +274,16 @@ export const content = {
           { eyebrow: "Methode", title: "Ervaringsgericht werken", body: "Door aandacht te schenken aan wat er in je gebeurt, leer je herkennen en begrijpen wat iets met je doet, en kun je eerlijker reageren" },
           { eyebrow: "Voor wie?", title: "Voor iedereen die wil ontdekken, leren en groeien", body: "Je echte zelf is de moeite waard om te ontdekken. Loop je met je ziel onder je arm door welk issue dan ook, blijf er dan niet mee lopen. Trek aan de bel." },
         ],
-        reassurance: { title: "Wat mag je verwachten?", body: "Door liefdevolle verbinding met jezelf en anderen zal je leven eenvoudiger en mooier worden. Door inzichten in oorzaken en reaktiepatronen, die niet behulpzaam zijn, is het mogelijk te veranderen. Door precies te ervaren en door te begrijpen waar iets vandaan komt lukt het om te leren beseffen wat nodig is. Ons unieke zelf krijgt de ruimte, en dat is tof" },
+        reassurance: { title: "Wat mag je verwachten?", body: "Door liefdevolle verbinding met jezelf en anderen zal je leven eenvoudiger en mooier worden. Door inzichten in oorzaken en reactiepatronen, die niet behulpzaam zijn, is het mogelijk te veranderen. Door precies te ervaren en door te begrijpen waar iets vandaan komt lukt het om te leren beseffen wat nodig is. Ons unieke zelf krijgt de ruimte, en dat is tof" },
         cta: "Maak kennis",
       },
       contact: {
         seo: {
           title: "Contact Tofleven",
-          description: "Neem contact op met Tofleven in Enter, reaktie meestal binnen twee werkdagen",
+          description: "Neem contact op met Tofleven in Enter, reactie meestal binnen twee werkdagen",
         },
         eyebrow: "Contact",
-        title: "Neem contact op met Tofleven in Enter, reaktie meestal binnen twee werkdagen",
+        title: "Neem contact op met Tofleven in Enter, reactie meestal binnen twee werkdagen",
         lede: "Vul het formulier in of stuur direct een mail. Reactie meestal binnen twee werkdagen",
         locationLabel: "Praktijk Tofleven",
         location: "Enter, Overijssel",
