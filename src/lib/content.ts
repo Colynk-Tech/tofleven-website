@@ -118,6 +118,13 @@ export interface ContactPageContent {
   location: string;
   emailLabel: string;
   email: string;
+  rates: {
+    heading: string;
+    items: readonly [
+      { label: string; price: string },
+      { label: string; price: string },
+    ];
+  };
   form: ContactFormContent;
 }
 export interface PageContentMap {
@@ -234,7 +241,9 @@ export const content = {
         name: "Ontdekkingsreis",
         photoCaption: "Portret van Gérita de Wilde.",
         paragraphs: [
-          "Mijn leven wil ik, Gérita, omschrijven als een ontdekkingsreis. Van mezelf kwijtgeraakt zijn naar terugvinden. Van ervaringen verwerken en herstellen naar talenten ontwikkelen. Meer en meer mezelf zijn. Daarin kan ik niet anders dan erkennen dat er een grote Createur is. Voor mij is dat God, liefdevol en goed. In onze kern zit onze een unieke waarde. De interesse voor wie iemand is, voor wat iemand werkelijk beleefd en meemaakt blijft voor mij doorgaan",
+          "Mijn leven zou ik, Gérita, omschrijven als een ontdekkingsreis. Een reis van jezelf kwijtraken naar jezelf terugvinden. Van het verwerken van ervaringen en het herstellen van wonden naar het ontwikkelen van talenten. Een reis waarin ik steeds meer mezelf word.",
+          "Daarbij kan ik niet anders dan erkennen dat er een grote Schepper (Creator) is. Voor mij is dat God: liefdevol, goed en nabij. In de kern van ieder mens ligt een unieke waarde besloten.",
+          "Mijn interesse in wie iemand werkelijk is, wat iemand beleeft en meemaakt, blijft mij inspireren. Het verlangen om mensen echt te zien, te begrijpen en te waarderen loopt als een rode draad door mijn leven.",
           "Ervaringen en ontwikkelingen in het leven hebben mij geleerd dat de lijn van de liefde een tof leven geeft. De liefdevolle impact van aandacht, acceptatie en respect, luisterend oor, tijd en begrip helpen verder groeien in het leven. De activiteiten aan opleiding en trainingen, huwelijk en gezin, missiereizen en leiden van een geloofsgemeenschap, het opvangen en ontmoeten van mensen, zijn allemaal avonturen die hieruit voortvloeien. In mijn praktijk aan huis begeleid ik sinds 1996 kinderen en hun ouders, jongeren, volwassenen en koppels. Ik geloof dat we pas echt tot bloei komen als onze geest en ziel en lichaam met elkaar in verbinding zijn",
           "Door samen de hand te reiken aan situaties die als vastzittende knopen ervaren worden, start de zoektocht naar herstel. Mijn therapeutische ondersteuning bij deze zoektocht en het doorwerken van ervaringen wil ik bieden via de brug van vertrouwen. En door interventies vanuit mijn expertise. O.a. 1986 Verpleegkundige (BIG), 1997-2008 Focussen, psychoanalytisch, pastoraal en clientgerichte integratief therapeut, 2008 ontwikkelingspsychologie, 2012 Emotional Focused Therapy en Houd me Vast training, 2013 Children focusing training, 2018 dynamiek op tafel, 2023 Emotional Focused Individual Therapy, 2024 Kindertekeningen begrijpen, 2026 Jeugd en Gezin (SKJ).",
           "Neem gerust contact op voor een eerste kennismaking om vervolgens te beslissen of de manier van aanpak bij je past",
@@ -266,7 +275,7 @@ export const content = {
         eyebrow: "Visie",
         title: "Ieder mens is de moeite waard om een leven te leven in overeenstemming met zichzelf en anderen",
         intro: [
-          "Vanaf binnenkomst, afhankelijk van de hulpvraag, ontdekken we wat nodig is. Daar wordt ruimte aan gegeven. Aan de slag gaan betekent vertrouwen dat zich aandient wat aan de orde mag komen, aandacht nodig heeft en alles doet ertoe. Met respect en zonder waarde oordeel aanwezig zijn en toelaten wat opkomt",
+          "Vanaf het moment van binnenkomst onderzoeken we, afhankelijk van de hulpvraag, wat er nodig is. Daarvoor creëren we ruimte. Aan de slag gaan betekent vertrouwen op wat zich aandient: dat wat gezien mag worden, aandacht vraagt en ertoe doet. We zijn aanwezig met respect, zonder oordeel, en geven ruimte aan wat er opkomt.",
           "Samen gaan we ontdekken waar knopen vast zitten, wat niet lekker gaat. Oorzaken ontdekken en ruimte in jezelf maken om anders te gaan functioneren, eerlijk en oprecht",
         ],
         pillars: [
@@ -289,6 +298,13 @@ export const content = {
         location: "Enter, Overijssel",
         emailLabel: "E-mail",
         email: "info@tofleven.nl",
+        rates: {
+          heading: "Tarieven",
+          items: [
+            { label: "Individueel consult", price: "€ 80 per uur" },
+            { label: "Partner- en relatietherapie", price: "€ 95 per sessie van 1,5 uur" },
+          ],
+        },
         form: {
           fields: { name: "Naam", email: "E-mailadres", subject: "Onderwerp", message: "Je bericht", messagePlaceholder: "Vertel kort wat je hulpvraag is" },
           subjectOptions: ["Individuele therpie", "Relatie therapie", "Kind & ouders/verzorgers", "Houd me Vast of Emotie coachen training"],
@@ -426,6 +442,13 @@ export const content = {
         location: "Enter, Overijssel",
         emailLabel: "E-mail",
         email: "info@tofleven.nl",
+        rates: {
+          heading: "Rates",
+          items: [
+            { label: "Individual consultation", price: "€80 per hour" },
+            { label: "Couples therapy", price: "€95 per 1.5-hour session" },
+          ],
+        },
         form: {
           fields: { name: "Name", email: "Email address", subject: "Subject", message: "Your message", messagePlaceholder: "Briefly explain what you need help with" },
           subjectOptions: ["Individual therapy", "Relationship therapy", "child & parents/caregivers", "Hold me Tight or Emotion coachen training"],

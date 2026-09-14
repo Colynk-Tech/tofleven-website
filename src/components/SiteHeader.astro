@@ -21,7 +21,16 @@ const enPath = page ? getPath("en", page) : getPath("en", "home");
 <header class="site-header">
 	<div class="shell header-inner">
 		<a class="brand" href={getPath(locale, "home")} aria-label="Tofleven home">
-			Tofleven
+			<span class="brand__mark" aria-hidden="true">
+				<img
+					src="/images/tofleven-logo.jpeg"
+					alt=""
+					width="992"
+					height="1061"
+					decoding="async"
+				/>
+			</span>
+			<span class="brand__name">Tofleven</span>
 		</a>
 
 		<nav class="primary-navigation" aria-label={locale === "nl" ? "Hoofdnavigatie" : "Main navigation"}>

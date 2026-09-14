@@ -200,6 +200,18 @@ const showTrainingHistory =
 					</div>
 				</dl>
 			</div>
+
+			<section class="rates-card" aria-labelledby={`rates-title-${locale}`}>
+				<h2 id={`rates-title-${locale}`}>{contact.rates.heading}</h2>
+				<dl>
+					{contact.rates.items.map((rate) => (
+						<div>
+							<dt>{rate.label}</dt>
+							<dd>{rate.price}</dd>
+						</div>
+					))}
+				</dl>
+			</section>
 		</div>
 
 		<ContactForm locale={locale} content={contact.form} />
