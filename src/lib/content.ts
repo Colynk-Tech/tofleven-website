@@ -352,7 +352,7 @@ export const content = {
         },
         hero: {
           eyebrow: "Integrative therapist in Enter",
-          title: "insight-oriented, experiential therapy, recovery from within",
+          title: "Insight-oriented, experiential therapy, recovery from within",
           intro: "The wondrous nature of our thinking, feeling, wanting and making choices time and time again is constantly in process and in motion. This enables us to make new choices and to seize new opportunities",
           ctaPrimary: "Get acquainted",
           ctaSecondary: "Read about my approach",
