@@ -18,14 +18,14 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/node": "^11.0.3",
+    "@astrojs/node": "^11.1.9",
     "astro": "^7.1.6"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.10",
-    "@astrojs/cloudflare": "^14.1.7",
-    "@types/node": "^26.1.2",
-    "typescript": "^6.0.3",
+    "@astrojs/check": "^0.9.12",
+    "@astrojs/cloudflare": "^14.4.2",
+    "@types/node": "^26.6.5",
+    "typescript": "^7.0.2",
     "wrangler": "^4.116.0"
   }
 }
